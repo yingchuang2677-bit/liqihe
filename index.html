@@ -206,6 +206,7 @@ const GID = '1797753147';
 const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
 
 let charts = {};
+let _chartData = null;
 
 function parseCSV(text) {
   // 简单CSV解析（处理带换行的引号字段）
@@ -273,6 +274,7 @@ async function loadData() {
     const active = data.filter(d => d.total_dau > 0 || d.total_rev > 0);
     if (!active.length) throw new Error('暂无数据');
 
+    _chartData = {data, labels: active.map(d => d.date.slice(5)), active};
     renderDashboard(active);
 
   } catch(e) {
@@ -282,6 +284,54 @@ async function loadData() {
 
   document.getElementById('loading').classList.add('hidden');
   document.getElementById('app').style.display = 'block';
+  // 等 DOM 渲染完再画图
+  setTimeout(() => renderCharts(_chartData), 100);
+}
+
+function renderCharts(d) {
+  if (!d) return;
+  const {active, labels} = d;
+  // 销毁旧图表
+  Object.values(charts).forEach(c => c && c.destroy());
+  charts = {};
+  const GR = {color:'rgba(30,40,64,.5)'};
+  Chart.defaults.color = '#64748b';
+  Chart.defaults.font = {family:"-apple-system,'PingFang SC',sans-serif"};
+  function mkL(id, sets) {
+    const ctx = document.getElementById(id);
+    if (!ctx) return;
+    charts[id] = new Chart(ctx, {type:'line', data:{labels, datasets:sets},
+      options:{responsive:true,maintainAspectRatio:false,
+        interaction:{mode:'index',intersect:false},
+        plugins:{legend:{display:sets.length>1,labels:{boxWidth:11,padding:10}},
+          tooltip:{callbacks:{label:c=>c.dataset.label+': '+Number(c.raw).toLocaleString()}}},
+        scales:{x:{grid:GR,ticks:{maxTicksLimit:10,font:{size:11}}},
+          y:{grid:GR,ticks:{callback:v=>v>=10000?Math.round(v/1000)+'k':v.toLocaleString(),font:{size:11}}}}}});
+  }
+  function mkB(id, sets) {
+    const ctx = document.getElementById(id);
+    if (!ctx) return;
+    charts[id] = new Chart(ctx, {type:'bar', data:{labels, datasets:sets},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:sets.length>1,labels:{boxWidth:11,padding:10}},
+          tooltip:{callbacks:{label:c=>c.dataset.label+': '+Number(c.raw).toLocaleString()}}},
+        scales:{x:{grid:{display:false},ticks:{maxTicksLimit:10,font:{size:11}}},
+          y:{grid:GR,ticks:{callback:v=>v>=10000?Math.round(v/1000)+'k':v.toLocaleString(),font:{size:11}}}}}});
+  }
+  function ln(c,d,l){return{label:l,data:d,borderColor:c,backgroundColor:c+'20',fill:true,tension:.35,pointRadius:2,pointHoverRadius:5,borderWidth:2};}
+  function br(c,d,l){return{label:l,data:d,backgroundColor:c+'bb',borderColor:c,borderWidth:1,borderRadius:3};}
+  const dau=active.map(d=>d.total_dau), rev=active.map(d=>d.total_rev), nw=active.map(d=>d.total_new);
+  const ad=active.map(d=>d.ad), ops=active.map(d=>d.ops), ch=active.map(d=>d.ch);
+  const g1d=active.map(d=>d.g1_dau), g1r=active.map(d=>d.g1_rev), g1n=active.map(d=>d.g1_new);
+  const g2d=active.map(d=>d.g2_dau), g2r=active.map(d=>d.g2_rev), g2n=active.map(d=>d.g2_new);
+  mkL('c1',[ln('#3b82f6',dau,'总日活'),ln('#a855f7',g1d,'1组'),ln('#06b6d4',g2d,'2组')]);
+  mkL('c2',[ln('#22c55e',rev,'总充值'),ln('#3b82f6',g1r,'1组'),ln('#a855f7',g2r,'2组')]);
+  mkB('c3',[br('#06b6d4',nw,'总新增')]);
+  mkB('c4',[br('#f59e0b',ad,'广告收入')]);
+  mkB('c5',[br('#ef4444',ops,'运营开支'),br('#a855f7',ch,'渠道开支')]);
+  mkL('c6',[ln('#3b82f6',g1d,'日活'),ln('#22c55e',g1r,'充值'),ln('#06b6d4',g1n,'新增')]);
+  mkL('c7',[ln('#a855f7',g2d,'日活'),ln('#22c55e',g2r,'充值'),ln('#06b6d4',g2n,'新增')]);
+  mkL('c8',[ln('#3b82f6',g1d,'1组日活'),ln('#a855f7',g2d,'2组日活')]);
 }
 
 function renderDashboard(data) {
@@ -327,65 +377,11 @@ function renderDashboard(data) {
     tbody.appendChild(tr);
   });
 
-  // 销毁旧图表
-  Object.values(charts).forEach(c => c.destroy());
-  charts = {};
-
-  // 图表配置
-  const GR = {color:'rgba(30,40,64,.5)'};
-  Chart.defaults.color = '#64748b';
-  Chart.defaults.font = {family:"-apple-system,'PingFang SC',sans-serif"};
-
-  function mkL(id, sets) {
-    const ctx = document.getElementById(id);
-    if (!ctx) return;
-    charts[id] = new Chart(ctx, {type:'line', data:{labels, datasets:sets},
-      options:{responsive:true,maintainAspectRatio:false,
-        interaction:{mode:'index',intersect:false},
-        plugins:{legend:{display:sets.length>1,labels:{boxWidth:11,padding:10}},
-          tooltip:{callbacks:{label:c=>c.dataset.label+': '+Number(c.raw).toLocaleString()}}},
-        scales:{x:{grid:GR,ticks:{maxTicksLimit:10,font:{size:11}}},
-          y:{grid:GR,ticks:{callback:v=>v>=10000?Math.round(v/1000)+'k':v.toLocaleString(),font:{size:11}}}}}});
-  }
-  function mkB(id, sets) {
-    const ctx = document.getElementById(id);
-    if (!ctx) return;
-    charts[id] = new Chart(ctx, {type:'bar', data:{labels, datasets:sets},
-      options:{responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{display:sets.length>1,labels:{boxWidth:11,padding:10}},
-          tooltip:{callbacks:{label:c=>c.dataset.label+': '+Number(c.raw).toLocaleString()}}},
-        scales:{x:{grid:{display:false},ticks:{maxTicksLimit:10,font:{size:11}}},
-          y:{grid:GR,ticks:{callback:v=>v>=10000?Math.round(v/1000)+'k':v.toLocaleString(),font:{size:11}}}}}});
-  }
-  function ln(c,d,l){return{label:l,data:d,borderColor:c,backgroundColor:c+'20',fill:true,tension:.35,pointRadius:2,pointHoverRadius:5,borderWidth:2};}
-  function br(c,d,l){return{label:l,data:d,backgroundColor:c+'bb',borderColor:c,borderWidth:1,borderRadius:3};}
-
-  const dau  = data.map(d=>d.total_dau);
-  const rev  = data.map(d=>d.total_rev);
-  const nw   = data.map(d=>d.total_new);
-  const ad   = data.map(d=>d.ad);
-  const ops  = data.map(d=>d.ops);
-  const ch   = data.map(d=>d.ch);
-  const g1d  = data.map(d=>d.g1_dau);
-  const g1r  = data.map(d=>d.g1_rev);
-  const g1n  = data.map(d=>d.g1_new);
-  const g2d  = data.map(d=>d.g2_dau);
-  const g2r  = data.map(d=>d.g2_rev);
-  const g2n  = data.map(d=>d.g2_new);
-
-  mkL('c1',[ln('#3b82f6',dau,'总日活'),ln('#a855f7',g1d,'1组'),ln('#06b6d4',g2d,'2组')]);
-  mkL('c2',[ln('#22c55e',rev,'总充值'),ln('#3b82f6',g1r,'1组'),ln('#a855f7',g2r,'2组')]);
-  mkB('c3',[br('#06b6d4',nw,'总新增')]);
-  mkB('c4',[br('#f59e0b',ad,'广告收入')]);
-  mkB('c5',[br('#ef4444',ops,'运营开支'),br('#a855f7',ch,'渠道开支')]);
-  mkL('c6',[ln('#3b82f6',g1d,'日活'),ln('#22c55e',g1r,'充值'),ln('#06b6d4',g1n,'新增')]);
-  mkL('c7',[ln('#a855f7',g2d,'日活'),ln('#22c55e',g2r,'充值'),ln('#06b6d4',g2n,'新增')]);
-  mkL('c8',[ln('#3b82f6',g1d,'1组日活'),ln('#a855f7',g2d,'2组日活')]);
+  // 销毁旧图表 - 图表在app显示后单独渲染
+  // (由 loadData 里的 setTimeout 调用 renderCharts)
 }
 
 function sw(el, id) {
-  // 延迟渲染图表（修复hidden tab canvas问题）
-  setTimeout(() => { Object.values(charts).forEach(c => { if(c) { c.resize(); }}); }, 50);
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   el.classList.add('active');
