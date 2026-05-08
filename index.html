@@ -11,103 +11,82 @@
   --blue:#3b82f6;--green:#22c55e;--orange:#f59e0b;--red:#ef4444;--purple:#a855f7;--cyan:#06b6d4;
   --text:#e2e8f0;--muted:#64748b;}
 body{background:var(--bg);color:var(--text);font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;min-height:100vh;}
-
-/* 加载中 */
 #loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:16px;}
 .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 #loading p{color:var(--muted);font-size:14px;}
-#loading.hidden{display:none;}
-
-.header{background:linear-gradient(135deg,#0f172a,#1a1040);padding:24px 32px 18px;border-bottom:1px solid var(--border);}
-.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.header h1{font-size:21px;font-weight:800;} .header h1 span{color:var(--blue);}
-.header-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.refresh-btn{background:rgba(59,130,246,.2);border:1px solid rgba(59,130,246,.4);color:var(--blue);border-radius:20px;padding:5px 16px;font-size:13px;cursor:pointer;transition:all .15s;font-weight:600;}
-.refresh-btn:hover{background:rgba(59,130,246,.4);}
-.badge{background:#1e2840;border:1px solid var(--border);border-radius:20px;padding:3px 14px;font-size:12px;color:var(--muted);}
-.refresh-btn{background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:var(--blue);border-radius:20px;padding:3px 14px;font-size:12px;cursor:pointer;transition:all .15s;}
-.refresh-btn:hover{background:rgba(59,130,246,.3);}
-.hkpi{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;}
-.hk{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:11px 14px;}
+.header{background:linear-gradient(135deg,#0f172a,#1a1040);padding:20px 24px 16px;border-bottom:1px solid var(--border);}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
+.header h1{font-size:20px;font-weight:800;} .header h1 span{color:var(--blue);}
+.header-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.badge{background:#1e2840;border:1px solid var(--border);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--muted);}
+.rbtn{background:var(--blue);color:#fff;border:none;border-radius:20px;padding:5px 16px;font-size:12px;cursor:pointer;font-weight:600;}
+.rbtn:hover{opacity:.85;}
+.hkpi{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
+.hk{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:10px 12px;}
 .hk .lbl{font-size:11px;color:var(--muted);margin-bottom:3px;}
-.hk .val{font-size:19px;font-weight:700;} .hk .sub{font-size:11px;color:var(--muted);margin-top:1px;}
-.blue{color:var(--blue);} .green{color:var(--green);} .orange{color:var(--orange);}
-.red{color:var(--red);} .purple{color:var(--purple);} .cyan{color:var(--cyan);}
-
-.tabs{display:flex;background:#0d1320;border-bottom:1px solid var(--border);padding:0 32px;}
-.tab{padding:11px 18px;font-size:13px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
-.tab:hover{color:var(--text);} .tab.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:600;}
-
-.page{visibility:hidden;position:absolute;left:-9999px;padding:22px 32px;pointer-events:none;} .page.active{visibility:visible;position:static;pointer-events:auto;}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
-.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;}
-.ct{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px;display:flex;align-items:center;gap:6px;}
-.ct::before{content:'';width:3px;height:13px;border-radius:2px;background:var(--blue);display:inline-block;}
-.cw{position:relative;height:250px;} .cws{position:relative;height:195px;}
-
-.gg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
-.gc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;}
-.gh{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
-.gb{padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;}
+.hk .val{font-size:18px;font-weight:700;} .hk .sub{font-size:11px;color:var(--muted);margin-top:1px;}
+.tabs{display:flex;background:#0d1320;border-bottom:1px solid var(--border);padding:0 24px;overflow-x:auto;}
+.tab{padding:10px 16px;font-size:13px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:600;}
+/* 关键：用 display:none 隐藏，但总览页始终可见 */
+.page{display:none;padding:20px 24px;}
+.page.active{display:block;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.ct{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;}
+.cw{position:relative;height:240px;}
+.cws{position:relative;height:185px;}
+.gg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.gc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.gh{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.gb{padding:2px 10px;border-radius:20px;font-size:12px;font-weight:700;}
 .gb1{background:rgba(59,130,246,.15);color:var(--blue);border:1px solid rgba(59,130,246,.3);}
 .gb2{background:rgba(168,85,247,.15);color:var(--purple);border:1px solid rgba(168,85,247,.3);}
-.gn{font-size:15px;font-weight:700;}
-.kr{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
-.ki{flex:1;min-width:76px;background:var(--card2);border-radius:8px;padding:9px;text-align:center;}
+.gn{font-size:14px;font-weight:700;}
+.kr{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.ki{flex:1;min-width:72px;background:var(--card2);border-radius:8px;padding:8px;text-align:center;}
 .ki .kl{font-size:10px;color:var(--muted);margin-bottom:2px;} .ki .kv{font-size:15px;font-weight:700;}
-
-.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:7px;}
-.member{background:var(--card2);border-radius:8px;padding:9px 12px;display:flex;flex-direction:column;gap:3px;border-left:3px solid var(--border);transition:border-color .15s;}
-.member:hover{border-left-color:var(--blue);} .mname{font-size:13px;font-weight:600;} .mrole{font-size:11px;color:var(--muted);}
-
+.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;}
+.member{background:var(--card2);border-radius:8px;padding:8px 10px;border-left:3px solid var(--blue);}
+.mname{font-size:13px;font-weight:600;display:block;} .mrole{font-size:11px;color:var(--muted);}
 .dt{width:100%;border-collapse:collapse;font-size:12px;}
-.dt th{background:#0d1320;color:var(--muted);padding:8px 10px;text-align:right;font-weight:600;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:1;}
+.dt th{background:#0d1320;color:var(--muted);padding:7px 9px;text-align:right;font-weight:600;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;}
 .dt th:first-child{text-align:left;}
-.dt td{padding:7px 10px;text-align:right;border-bottom:1px solid rgba(30,40,64,.4);}
-.dt td:first-child{text-align:left;color:var(--muted);font-size:11px;}
+.dt td{padding:6px 9px;text-align:right;border-bottom:1px solid rgba(30,40,64,.4);}
+.dt td:first-child{text-align:left;color:var(--muted);}
 .dt tr:hover td{background:rgba(59,130,246,.04);}
 .nb{color:var(--blue);font-weight:600;} .ng{color:var(--green);font-weight:600;}
-.nc{color:var(--cyan);font-weight:600;} .no{color:var(--orange);font-weight:600;}
-.nr{color:var(--red);} .np{color:var(--purple);}
-
-@media(max-width:900px){
+.nc{color:var(--cyan);} .no{color:var(--orange);} .nr{color:var(--red);} .np{color:var(--purple);}
+@media(max-width:768px){
   .hkpi{grid-template-columns:repeat(3,1fr);}
   .g2,.gg{grid-template-columns:1fr;}
   .g3{grid-template-columns:1fr 1fr;}
-  .header{padding:16px;}
-  .page{padding:14px;}
-  .tabs{padding:0 16px;}
 }
 </style>
 </head>
 <body>
-
-<div id="loading">
-  <div class="spinner"></div>
-  <p>正在加载最新数据...</p>
-</div>
+<div id="loading"><div class="spinner"></div><p id="load-msg">正在加载最新数据...</p></div>
 
 <div id="app" style="display:none">
 <div class="header">
   <div class="header-top">
     <h1>运营<span>2部</span>数据看板</h1>
     <div class="header-meta">
-      <div class="badge" id="badge-date">加载中...</div>
-      <button class="refresh-btn" onclick="loadData()">↻ 刷新数据</button>
+      <span class="badge" id="badge-date">-</span>
+      <button class="rbtn" onclick="loadData()">↻ 刷新</button>
     </div>
   </div>
   <div class="hkpi">
-    <div class="hk"><div class="lbl">今日日活</div><div class="val blue" id="k-dau">-</div><div class="sub" id="k-dau-sub">月均 -</div></div>
-    <div class="hk"><div class="lbl">今日充值</div><div class="val green" id="k-rev">-</div><div class="sub" id="k-rev-sub">月累计 -</div></div>
-    <div class="hk"><div class="lbl">今日新增</div><div class="val cyan" id="k-new">-</div><div class="sub" id="k-new-sub">月累计 -</div></div>
-    <div class="hk"><div class="lbl">广告收入</div><div class="val orange" id="k-ad">-</div><div class="sub">月累计</div></div>
-    <div class="hk"><div class="lbl">运营开支</div><div class="val red" id="k-ops">-</div><div class="sub">月累计</div></div>
-    <div class="hk"><div class="lbl">渠道开支</div><div class="val purple" id="k-ch">-</div><div class="sub">月累计</div></div>
+    <div class="hk"><div class="lbl">今日日活</div><div class="val" style="color:var(--blue)" id="k-dau">-</div><div class="sub" id="k-dau-sub"></div></div>
+    <div class="hk"><div class="lbl">今日充值</div><div class="val" style="color:var(--green)" id="k-rev">-</div><div class="sub" id="k-rev-sub"></div></div>
+    <div class="hk"><div class="lbl">今日新增</div><div class="val" style="color:var(--cyan)" id="k-new">-</div><div class="sub" id="k-new-sub"></div></div>
+    <div class="hk"><div class="lbl">广告收入</div><div class="val" style="color:var(--orange)" id="k-ad">-</div><div class="sub">月累计</div></div>
+    <div class="hk"><div class="lbl">运营开支</div><div class="val" style="color:var(--red)" id="k-ops">-</div><div class="sub">月累计</div></div>
+    <div class="hk"><div class="lbl">渠道开支</div><div class="val" style="color:var(--purple)" id="k-ch">-</div><div class="sub">月累计</div></div>
   </div>
 </div>
-
 <div class="tabs">
   <div class="tab active" onclick="sw(this,'overview')">📊 总览</div>
   <div class="tab" onclick="sw(this,'group')">👥 分组对比</div>
@@ -117,13 +96,13 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'PingFang 
 
 <div class="page active" id="page-overview">
   <div class="g2">
-    <div class="card"><div class="ct">日活趋势</div><div class="cw"><canvas id="c1"></canvas></div></div>
-    <div class="card"><div class="ct">充值趋势</div><div class="cw"><canvas id="c2"></canvas></div></div>
+    <div class="card"><div class="ct">📈 日活趋势</div><div class="cw"><canvas id="c1"></canvas></div></div>
+    <div class="card"><div class="ct">💰 充值趋势</div><div class="cw"><canvas id="c2"></canvas></div></div>
   </div>
   <div class="g3">
-    <div class="card"><div class="ct">新增用户</div><div class="cws"><canvas id="c3"></canvas></div></div>
-    <div class="card"><div class="ct">广告收入</div><div class="cws"><canvas id="c4"></canvas></div></div>
-    <div class="card"><div class="ct">开支概览</div><div class="cws"><canvas id="c5"></canvas></div></div>
+    <div class="card"><div class="ct">👤 新增用户</div><div class="cws"><canvas id="c3"></canvas></div></div>
+    <div class="card"><div class="ct">📣 广告收入</div><div class="cws"><canvas id="c4"></canvas></div></div>
+    <div class="card"><div class="ct">💸 开支概览</div><div class="cws"><canvas id="c5"></canvas></div></div>
   </div>
 </div>
 
@@ -132,37 +111,34 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'PingFang 
     <div class="gc">
       <div class="gh"><span class="gb gb1">1组</span><span class="gn">李其和</span></div>
       <div class="kr">
-        <div class="ki"><div class="kl">均日活</div><div class="kv blue" id="g1-dau">-</div></div>
-        <div class="ki"><div class="kl">月充值</div><div class="kv green" id="g1-rev">-</div></div>
-        <div class="ki"><div class="kl">月新增</div><div class="kv cyan" id="g1-new">-</div></div>
+        <div class="ki"><div class="kl">均日活</div><div class="kv" style="color:var(--blue)" id="g1-dau">-</div></div>
+        <div class="ki"><div class="kl">月充值</div><div class="kv" style="color:var(--green)" id="g1-rev">-</div></div>
+        <div class="ki"><div class="kl">月新增</div><div class="kv" style="color:var(--cyan)" id="g1-new">-</div></div>
       </div>
       <div class="cw"><canvas id="c6"></canvas></div>
     </div>
     <div class="gc">
       <div class="gh"><span class="gb gb2">2组</span><span class="gn">苏杰西</span></div>
       <div class="kr">
-        <div class="ki"><div class="kl">均日活</div><div class="kv purple" id="g2-dau">-</div></div>
-        <div class="ki"><div class="kl">月充值</div><div class="kv green" id="g2-rev">-</div></div>
-        <div class="ki"><div class="kl">月新增</div><div class="kv cyan" id="g2-new">-</div></div>
+        <div class="ki"><div class="kl">均日活</div><div class="kv" style="color:var(--purple)" id="g2-dau">-</div></div>
+        <div class="ki"><div class="kl">月充值</div><div class="kv" style="color:var(--green)" id="g2-rev">-</div></div>
+        <div class="ki"><div class="kl">月新增</div><div class="kv" style="color:var(--cyan)" id="g2-new">-</div></div>
       </div>
       <div class="cw"><canvas id="c7"></canvas></div>
     </div>
   </div>
-  <div class="card"><div class="ct">1组 vs 2组 · 日活对比</div><div class="cw"><canvas id="c8"></canvas></div></div>
+  <div class="card"><div class="ct">⚔️ 1组 vs 2组 日活对比</div><div class="cw"><canvas id="c8"></canvas></div></div>
 </div>
 
 <div class="page" id="page-detail">
   <div class="card">
-    <div class="ct">每日明细</div>
-    <div style="overflow-x:auto;max-height:600px;overflow-y:auto;">
-      <table class="dt">
-        <thead><tr>
-          <th>日期</th><th>总日活</th><th>总充值</th><th>总新增</th>
-          <th>广告收入</th><th>运营开支</th><th>渠道开支</th>
-          <th>1组日活</th><th>1组充值</th><th>2组日活</th><th>2组充值</th>
-        </tr></thead>
-        <tbody id="detail-tbody"></tbody>
-      </table>
+    <div class="ct">📋 每日明细</div>
+    <div style="overflow-x:auto;max-height:580px;overflow-y:auto;">
+      <table class="dt"><thead><tr>
+        <th>日期</th><th>总日活</th><th>总充值</th><th>总新增</th>
+        <th>广告收入</th><th>运营开支</th><th>渠道开支</th>
+        <th>1组日活</th><th>1组充值</th><th>2组日活</th><th>2组充值</th>
+      </tr></thead><tbody id="dtbody"></tbody></table>
     </div>
   </div>
 </div>
@@ -185,213 +161,148 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'PingFang 
       </div>
     </div>
     <div class="card">
-      <div class="ct" style="--blue:#a855f7">2组 · 苏杰西（7人）</div>
+      <div class="ct">2组 · 苏杰西（7人）</div>
       <div class="mg">
-        <div class="member" style="border-left-color:transparent"><span class="mname">凯晨</span><span class="mrole">杏吧剪辑</span></div>
-        <div class="member" style="border-left-color:transparent"><span class="mname">欧丹</span><span class="mrole">杏吧剪辑</span></div>
-        <div class="member" style="border-left-color:transparent"><span class="mname">李禾</span><span class="mrole">抖阴破解/DeepSeek</span></div>
-        <div class="member" style="border-left-color:transparent"><span class="mname">张百胜</span><span class="mrole">杏吧</span></div>
-        <div class="member" style="border-left-color:transparent"><span class="mname">白敬</span><span class="mrole">杏吧</span></div>
-        <div class="member" style="border-left-color:transparent"><span class="mname">James</span><span class="mrole">杏吧</span></div>
-        <div class="member" style="border-left-color:transparent"><span class="mname">秋容</span><span class="mrole">杏吧剪辑</span></div>
+        <div class="member" style="border-left-color:var(--purple)"><span class="mname">凯晨</span><span class="mrole">杏吧剪辑</span></div>
+        <div class="member" style="border-left-color:var(--purple)"><span class="mname">欧丹</span><span class="mrole">杏吧剪辑</span></div>
+        <div class="member" style="border-left-color:var(--purple)"><span class="mname">李禾</span><span class="mrole">抖阴破解/DeepSeek</span></div>
+        <div class="member" style="border-left-color:var(--purple)"><span class="mname">张百胜</span><span class="mrole">杏吧</span></div>
+        <div class="member" style="border-left-color:var(--purple)"><span class="mname">白敬</span><span class="mrole">杏吧</span></div>
+        <div class="member" style="border-left-color:var(--purple)"><span class="mname">James</span><span class="mrole">杏吧</span></div>
+        <div class="member" style="border-left-color:var(--purple)"><span class="mname">秋容</span><span class="mrole">杏吧剪辑</span></div>
       </div>
     </div>
   </div>
 </div>
-</div><!-- #app -->
+</div>
 
 <script>
-const SHEET_ID = '18kVtCVu0CgKyIncH1ohp7BajP9qM_DaRbsTRaF6n6y0';
-const GID = '1797753147';
-const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
+const SHEET_ID='18kVtCVu0CgKyIncH1ohp7BajP9qM_DaRbsTRaF6n6y0', GID='1797753147';
+const CSV_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
+let CH={}, CUR_TAB='overview', ALL_DATA=null;
 
-let charts = {};
-let _chartData = null;
-
-function parseCSV(text) {
-  // 简单CSV解析（处理带换行的引号字段）
-  const rows = [];
-  let cur = [], field = '', inQ = false;
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
-    if (inQ) {
-      if (c === '"' && text[i+1] === '"') { field += '"'; i++; }
-      else if (c === '"') { inQ = false; }
-      else { field += c; }
-    } else {
-      if (c === '"') { inQ = true; }
-      else if (c === ',') { cur.push(field); field = ''; }
-      else if (c === '\n') { cur.push(field); rows.push(cur); cur = []; field = ''; }
-      else if (c !== '\r') { field += c; }
-    }
-  }
-  if (field || cur.length) { cur.push(field); rows.push(cur); }
-  return rows;
+function parseCSV(t){
+  const rows=[];let cur=[],f='',q=false;
+  for(let i=0;i<t.length;i++){const c=t[i];
+    if(q){if(c==='"'&&t[i+1]==='"'){f+='"';i++;}else if(c==='"'){q=false;}else{f+=c;}}
+    else{if(c==='"'){q=true;}else if(c===','){cur.push(f);f='';}
+      else if(c==='\n'){cur.push(f);rows.push(cur);cur=[];f='';}
+      else if(c!=='\r'){f+=c;}}}
+  if(f||cur.length){cur.push(f);rows.push(cur);}return rows;
 }
+function nv(r,i){try{const v=(r[i]||'').trim().replace(/,/g,'');return v?parseFloat(v):0;}catch(e){return 0;}}
+function fmt(v){return v>0?Math.round(v).toLocaleString():'-';}
+function savg(a){const s=a.filter(x=>x>0);return s.length?s.reduce((a,b)=>a+b,0)/s.length:0;}
 
-function n(r, i) {
-  try { const v = (r[i]||'').trim().replace(/,/g,''); return v ? parseFloat(v) : 0; }
-  catch(e) { return 0; }
-}
-
-function fmt(v) { return v > 0 ? Math.round(v).toLocaleString() : '-'; }
-function fmtk(v) { return v >= 10000 ? Math.round(v/1000)+'k' : v.toLocaleString(); }
-function safe(arr) { return arr.filter(x => x > 0); }
-function avg(arr) { const s = safe(arr); return s.length ? s.reduce((a,b)=>a+b,0)/s.length : 0; }
-
-async function loadData() {
-  document.getElementById('loading').classList.remove('hidden');
-  document.getElementById('app').style.display = 'none';
-
-  try {
-    // 使用 CORS 代理或直接请求
+async function loadData(){
+  document.getElementById('loading').style.display='flex';
+  document.getElementById('app').style.display='none';
+  document.getElementById('load-msg').textContent='正在加载最新数据...';
+  try{
     let text;
-    try {
-      const res = await fetch(CSV_URL);
-      text = await res.text();
-    } catch(e) {
-      // 备用代理
-      const res = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(CSV_URL));
-      text = await res.text();
+    try{const r=await fetch(CSV_URL);text=await r.text();}
+    catch(e){const r=await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(CSV_URL));text=await r.text();}
+    const rows=parseCSV(text), data=[];
+    for(let i=3;i<rows.length;i++){
+      const r=rows[i], date=(r[0]||'').trim();
+      if(!date.startsWith('2026'))continue;
+      data.push({date,dau:nv(r,2),rev:nv(r,4),new:nv(r,12),ad:nv(r,20),ops:nv(r,25),ch:nv(r,30),
+        g1d:nv(r,35),g1n:nv(r,37),g1r:nv(r,41),g2d:nv(r,54),g2n:nv(r,56),g2r:nv(r,60)});
     }
-
-    const rows = parseCSV(text);
-    const data = [];
-
-    for (let i = 3; i < rows.length; i++) {
-      const r = rows[i];
-      const date = (r[0]||'').trim();
-      if (!date.startsWith('2026')) continue;
-      data.push({
-        date,
-        total_dau: n(r,2), total_rev: n(r,4), total_new: n(r,12),
-        ad: n(r,20), ops: n(r,25), ch: n(r,30),
-        g1_dau: n(r,35), g1_new: n(r,37), g1_rev: n(r,41),
-        g2_dau: n(r,54), g2_new: n(r,56), g2_rev: n(r,60),
-      });
-    }
-
-    const active = data.filter(d => d.total_dau > 0 || d.total_rev > 0);
-    if (!active.length) throw new Error('暂无数据');
-
-    _chartData = {data, labels: active.map(d => d.date.slice(5)), active};
-    renderDashboard(active);
-
-  } catch(e) {
-    document.getElementById('loading').querySelector('p').textContent = '加载失败: ' + e.message + '  点击刷新重试';
-    return;
+    ALL_DATA=data.filter(d=>d.dau>0||d.rev>0);
+    if(!ALL_DATA.length)throw new Error('暂无数据');
+    fillKPI(ALL_DATA);
+    fillTable(ALL_DATA);
+    // 先显示app，再渲染图表
+    document.getElementById('loading').style.display='none';
+    document.getElementById('app').style.display='block';
+    // 等页面完全渲染后再画图表
+    requestAnimationFrame(()=>requestAnimationFrame(()=>drawCharts(ALL_DATA)));
+  }catch(e){
+    document.getElementById('load-msg').textContent='加载失败: '+e.message+' — 请点刷新重试';
   }
-
-  document.getElementById('loading').classList.add('hidden');
-  document.getElementById('app').style.display = 'block';
-  // 等 DOM 渲染完再画图
-  setTimeout(() => renderCharts(_chartData), 100);
 }
 
-function renderCharts(d) {
-  if (!d) return;
-  const {active, labels} = d;
-  // 销毁旧图表
-  Object.values(charts).forEach(c => c && c.destroy());
-  charts = {};
-  const GR = {color:'rgba(30,40,64,.5)'};
-  Chart.defaults.color = '#64748b';
-  Chart.defaults.font = {family:"-apple-system,'PingFang SC',sans-serif"};
-  function mkL(id, sets) {
-    const ctx = document.getElementById(id);
-    if (!ctx) return;
-    charts[id] = new Chart(ctx, {type:'line', data:{labels, datasets:sets},
-      options:{responsive:true,maintainAspectRatio:false,
-        interaction:{mode:'index',intersect:false},
-        plugins:{legend:{display:sets.length>1,labels:{boxWidth:11,padding:10}},
-          tooltip:{callbacks:{label:c=>c.dataset.label+': '+Number(c.raw).toLocaleString()}}},
-        scales:{x:{grid:GR,ticks:{maxTicksLimit:10,font:{size:11}}},
-          y:{grid:GR,ticks:{callback:v=>v>=10000?Math.round(v/1000)+'k':v.toLocaleString(),font:{size:11}}}}}});
-  }
-  function mkB(id, sets) {
-    const ctx = document.getElementById(id);
-    if (!ctx) return;
-    charts[id] = new Chart(ctx, {type:'bar', data:{labels, datasets:sets},
-      options:{responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{display:sets.length>1,labels:{boxWidth:11,padding:10}},
-          tooltip:{callbacks:{label:c=>c.dataset.label+': '+Number(c.raw).toLocaleString()}}},
-        scales:{x:{grid:{display:false},ticks:{maxTicksLimit:10,font:{size:11}}},
-          y:{grid:GR,ticks:{callback:v=>v>=10000?Math.round(v/1000)+'k':v.toLocaleString(),font:{size:11}}}}}});
-  }
-  function ln(c,d,l){return{label:l,data:d,borderColor:c,backgroundColor:c+'20',fill:true,tension:.35,pointRadius:2,pointHoverRadius:5,borderWidth:2};}
-  function br(c,d,l){return{label:l,data:d,backgroundColor:c+'bb',borderColor:c,borderWidth:1,borderRadius:3};}
-  const dau=active.map(d=>d.total_dau), rev=active.map(d=>d.total_rev), nw=active.map(d=>d.total_new);
-  const ad=active.map(d=>d.ad), ops=active.map(d=>d.ops), ch=active.map(d=>d.ch);
-  const g1d=active.map(d=>d.g1_dau), g1r=active.map(d=>d.g1_rev), g1n=active.map(d=>d.g1_new);
-  const g2d=active.map(d=>d.g2_dau), g2r=active.map(d=>d.g2_rev), g2n=active.map(d=>d.g2_new);
-  mkL('c1',[ln('#3b82f6',dau,'总日活'),ln('#a855f7',g1d,'1组'),ln('#06b6d4',g2d,'2组')]);
-  mkL('c2',[ln('#22c55e',rev,'总充值'),ln('#3b82f6',g1r,'1组'),ln('#a855f7',g2r,'2组')]);
-  mkB('c3',[br('#06b6d4',nw,'总新增')]);
-  mkB('c4',[br('#f59e0b',ad,'广告收入')]);
-  mkB('c5',[br('#ef4444',ops,'运营开支'),br('#a855f7',ch,'渠道开支')]);
-  mkL('c6',[ln('#3b82f6',g1d,'日活'),ln('#22c55e',g1r,'充值'),ln('#06b6d4',g1n,'新增')]);
-  mkL('c7',[ln('#a855f7',g2d,'日活'),ln('#22c55e',g2r,'充值'),ln('#06b6d4',g2n,'新增')]);
-  mkL('c8',[ln('#3b82f6',g1d,'1组日活'),ln('#a855f7',g2d,'2组日活')]);
+function fillKPI(d){
+  const last=d[d.length-1];
+  document.getElementById('badge-date').textContent='2026年5月 · 最新 '+last.date;
+  document.getElementById('k-dau').textContent=fmt(last.dau);
+  document.getElementById('k-dau-sub').textContent='月均 '+fmt(savg(d.map(x=>x.dau)));
+  document.getElementById('k-rev').textContent=fmt(last.rev);
+  document.getElementById('k-rev-sub').textContent='月累计 '+fmt(d.reduce((s,x)=>s+x.rev,0));
+  document.getElementById('k-new').textContent=fmt(last.new);
+  document.getElementById('k-new-sub').textContent='月累计 '+fmt(d.reduce((s,x)=>s+x.new,0));
+  document.getElementById('k-ad').textContent=fmt(d.reduce((s,x)=>s+x.ad,0));
+  document.getElementById('k-ops').textContent=fmt(d.reduce((s,x)=>s+x.ops,0));
+  document.getElementById('k-ch').textContent=fmt(d.reduce((s,x)=>s+x.ch,0));
+  document.getElementById('g1-dau').textContent=fmt(savg(d.map(x=>x.g1d)));
+  document.getElementById('g1-rev').textContent=fmt(d.reduce((s,x)=>s+x.g1r,0));
+  document.getElementById('g1-new').textContent=fmt(d.reduce((s,x)=>s+x.g1n,0));
+  document.getElementById('g2-dau').textContent=fmt(savg(d.map(x=>x.g2d)));
+  document.getElementById('g2-rev').textContent=fmt(d.reduce((s,x)=>s+x.g2r,0));
+  document.getElementById('g2-new').textContent=fmt(d.reduce((s,x)=>s+x.g2n,0));
 }
 
-function renderDashboard(data) {
-  const last = data[data.length - 1];
-  const labels = data.map(d => d.date.slice(5));
-
-  // KPI
-  document.getElementById('badge-date').textContent = '2026年5月 · 最新 ' + last.date;
-  document.getElementById('k-dau').textContent = fmt(last.total_dau);
-  document.getElementById('k-dau-sub').textContent = '月均 ' + fmt(avg(data.map(d=>d.total_dau)));
-  document.getElementById('k-rev').textContent = fmt(last.total_rev);
-  document.getElementById('k-rev-sub').textContent = '月累计 ' + fmt(data.reduce((s,d)=>s+d.total_rev,0));
-  document.getElementById('k-new').textContent = fmt(last.total_new);
-  document.getElementById('k-new-sub').textContent = '月累计 ' + fmt(data.reduce((s,d)=>s+d.total_new,0));
-  document.getElementById('k-ad').textContent = fmt(data.reduce((s,d)=>s+d.ad,0));
-  document.getElementById('k-ops').textContent = fmt(data.reduce((s,d)=>s+d.ops,0));
-  document.getElementById('k-ch').textContent = fmt(data.reduce((s,d)=>s+d.ch,0));
-
-  // 分组KPI
-  document.getElementById('g1-dau').textContent = fmt(avg(data.map(d=>d.g1_dau)));
-  document.getElementById('g1-rev').textContent = fmt(data.reduce((s,d)=>s+d.g1_rev,0));
-  document.getElementById('g1-new').textContent = fmt(data.reduce((s,d)=>s+d.g1_new,0));
-  document.getElementById('g2-dau').textContent = fmt(avg(data.map(d=>d.g2_dau)));
-  document.getElementById('g2-rev').textContent = fmt(data.reduce((s,d)=>s+d.g2_rev,0));
-  document.getElementById('g2-new').textContent = fmt(data.reduce((s,d)=>s+d.g2_new,0));
-
-  // 明细表
-  const tbody = document.getElementById('detail-tbody');
-  tbody.innerHTML = '';
-  [...data].reverse().forEach(d => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${d.date.slice(5)}</td>
-      <td class="nb">${fmt(d.total_dau)}</td>
-      <td class="ng">${fmt(d.total_rev)}</td>
-      <td class="nc">${fmt(d.total_new)}</td>
-      <td class="no">${fmt(d.ad)}</td>
-      <td class="nr">${fmt(d.ops)}</td>
-      <td class="np">${fmt(d.ch)}</td>
-      <td>${fmt(d.g1_dau)}</td>
-      <td>${fmt(d.g1_rev)}</td>
-      <td>${fmt(d.g2_dau)}</td>
-      <td>${fmt(d.g2_rev)}</td>`;
-    tbody.appendChild(tr);
+function fillTable(d){
+  const tb=document.getElementById('dtbody');tb.innerHTML='';
+  [...d].reverse().forEach(x=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${x.date.slice(5)}</td><td class="nb">${fmt(x.dau)}</td><td class="ng">${fmt(x.rev)}</td>
+      <td class="nc">${fmt(x.new)}</td><td class="no">${fmt(x.ad)}</td><td class="nr">${fmt(x.ops)}</td>
+      <td class="np">${fmt(x.ch)}</td><td>${fmt(x.g1d)}</td><td>${fmt(x.g1r)}</td>
+      <td>${fmt(x.g2d)}</td><td>${fmt(x.g2r)}</td>`;
+    tb.appendChild(tr);
   });
-
-  // 销毁旧图表 - 图表在app显示后单独渲染
-  // (由 loadData 里的 setTimeout 调用 renderCharts)
 }
 
-function sw(el, id) {
+function drawCharts(d){
+  Object.values(CH).forEach(c=>{try{c.destroy();}catch(e){}});CH={};
+  const LB=d.map(x=>x.date.slice(5));
+  const GR={color:'rgba(30,40,64,.5)'};
+  Chart.defaults.color='#64748b';
+  Chart.defaults.font={family:"-apple-system,'PingFang SC',sans-serif",size:11};
+  function yt(v){return v>=10000?Math.round(v/1000)+'k':v.toLocaleString();}
+  function opt(multi){return{responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:multi,labels:{boxWidth:10,padding:8,font:{size:11}}},
+      tooltip:{callbacks:{label:c=>c.dataset.label+': '+Number(c.raw).toLocaleString()}}},
+    scales:{x:{grid:GR,ticks:{maxTicksLimit:10}},y:{grid:GR,ticks:{callback:yt}}}};}
+  function mkL(id,sets){
+    const el=document.getElementById(id);if(!el)return;
+    CH[id]=new Chart(el,{type:'line',data:{labels:LB,datasets:sets},options:opt(sets.length>1)});}
+  function mkB(id,sets){
+    const el=document.getElementById(id);if(!el)return;
+    const o=opt(sets.length>1);o.scales.x.grid={display:false};
+    CH[id]=new Chart(el,{type:'bar',data:{labels:LB,datasets:sets},options:o});}
+  function ln(c,arr,l){return{label:l,data:arr,borderColor:c,backgroundColor:c+'22',fill:true,tension:.35,pointRadius:2,pointHoverRadius:5,borderWidth:2};}
+  function br(c,arr,l){return{label:l,data:arr,backgroundColor:c+'bb',borderColor:c,borderWidth:1,borderRadius:3};}
+  mkL('c1',[ln('#3b82f6',d.map(x=>x.dau),'总日活'),ln('#a855f7',d.map(x=>x.g1d),'1组'),ln('#06b6d4',d.map(x=>x.g2d),'2组')]);
+  mkL('c2',[ln('#22c55e',d.map(x=>x.rev),'总充值'),ln('#3b82f6',d.map(x=>x.g1r),'1组'),ln('#a855f7',d.map(x=>x.g2r),'2组')]);
+  mkB('c3',[br('#06b6d4',d.map(x=>x.new),'总新增')]);
+  mkB('c4',[br('#f59e0b',d.map(x=>x.ad),'广告收入')]);
+  mkB('c5',[br('#ef4444',d.map(x=>x.ops),'运营开支'),br('#a855f7',d.map(x=>x.ch),'渠道开支')]);
+  mkL('c6',[ln('#3b82f6',d.map(x=>x.g1d),'日活'),ln('#22c55e',d.map(x=>x.g1r),'充值'),ln('#06b6d4',d.map(x=>x.g1n),'新增')]);
+  mkL('c7',[ln('#a855f7',d.map(x=>x.g2d),'日活'),ln('#22c55e',d.map(x=>x.g2r),'充值'),ln('#06b6d4',d.map(x=>x.g2n),'新增')]);
+  mkL('c8',[ln('#3b82f6',d.map(x=>x.g1d),'1组日活'),ln('#a855f7',d.map(x=>x.g2d),'2组日活')]);
+}
+
+function sw(el,id){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('page-'+id).classList.add('active');
+  const pg=document.getElementById('page-'+id);
+  pg.classList.add('active');
+  CUR_TAB=id;
+  // 切换到有图表的tab时重绘
+  if(ALL_DATA && (id==='group')){
+    requestAnimationFrame(()=>{
+      ['c6','c7','c8'].forEach(id=>{if(CH[id])CH[id].resize();});
+    });
+  }
 }
 
-// 启动
 loadData();
-// 每5分钟自动刷新
-setInterval(loadData, 5 * 60 * 1000);
+setInterval(loadData, 5*60*1000);
 </script>
 </body>
 </html>
