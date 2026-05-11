@@ -59,6 +59,43 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'PingFang 
 .dt tr:hover td{background:rgba(59,130,246,.04);}
 .nb{color:var(--blue);font-weight:600;} .ng{color:var(--green);font-weight:600;}
 .nc{color:var(--cyan);} .no{color:var(--orange);} .nr{color:var(--red);} .np{color:var(--purple);}
+/* 评估页样式 */
+.eval-section{margin-bottom:20px;}
+.eval-title{font-size:15px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eval-title .et-icon{font-size:18px;}
+.eval-title .et-badge{font-size:11px;font-weight:600;padding:2px 10px;border-radius:20px;}
+.eval-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-bottom:16px;}
+.eval-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;border-left:4px solid var(--border);}
+.eval-card.c-blue{border-left-color:var(--blue);}
+.eval-card.c-purple{border-left-color:var(--purple);}
+.eval-card.c-orange{border-left-color:var(--orange);}
+.eval-card.c-green{border-left-color:var(--green);}
+.eval-card.c-cyan{border-left-color:var(--cyan);}
+.eval-card .ec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.eval-card .ec-name{font-size:13px;font-weight:700;}
+.eval-card .ec-tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;}
+.tag-warn{background:rgba(245,158,11,.15);color:var(--orange);border:1px solid rgba(245,158,11,.3);}
+.tag-ok{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3);}
+.tag-risk{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);}
+.eval-card .ec-items{display:flex;flex-direction:column;gap:6px;}
+.ec-item{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--sub,#94a3b8);line-height:1.5;}
+.ec-item::before{content:'·';color:var(--muted);flex-shrink:0;margin-top:1px;}
+.eval-summary{background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(168,85,247,.08));border:1px solid rgba(59,130,246,.2);border-radius:12px;padding:20px;margin-bottom:16px;}
+.eval-summary h3{font-size:14px;font-weight:700;margin-bottom:12px;color:var(--blue);}
+.eval-summary p{font-size:13px;line-height:1.8;color:var(--sub,#94a3b8);margin-bottom:8px;}
+.eval-summary p:last-child{margin-bottom:0;}
+.eval-conclusion{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.eval-conclusion h3{font-size:13px;font-weight:700;margin-bottom:10px;color:var(--text);}
+.conclusion-items{display:flex;flex-direction:column;gap:8px;}
+.ci{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--card2);border-radius:8px;}
+.ci-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
+.ci-num.n1{background:rgba(59,130,246,.2);color:var(--blue);}
+.ci-num.n2{background:rgba(168,85,247,.2);color:var(--purple);}
+.ci-num.n3{background:rgba(245,158,11,.2);color:var(--orange);}
+.ci-text{font-size:12px;line-height:1.6;color:var(--sub,#94a3b8);}
+.focus-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-top:12px;}
+.focus-item{background:var(--card2);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;}
+.fi-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 @media(max-width:768px){
   .hkpi{grid-template-columns:repeat(3,1fr);}
   .g2,.gg{grid-template-columns:1fr;}
@@ -92,6 +129,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'PingFang 
   <div class="tab" onclick="sw(this,'group')">👥 分组对比</div>
   <div class="tab" onclick="sw(this,'detail')">📋 明细</div>
   <div class="tab" onclick="sw(this,'team')">🏠 人员</div>
+  <div class="tab" onclick="sw(this,'eval')">🎯 团队评估</div>
 </div>
 
 <div class="page active" id="page-overview">
@@ -172,6 +210,127 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'PingFang 
         <div class="member" style="border-left-color:var(--purple)"><span class="mname">秋容</span><span class="mrole">杏吧剪辑</span></div>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="page" id="page-eval">
+  <!-- 总结语 -->
+  <div style="background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(168,85,247,.08));border:1px solid rgba(59,130,246,.2);border-radius:12px;padding:20px;margin-bottom:16px;">
+    <div style="font-size:14px;font-weight:800;color:var(--blue);margin-bottom:12px;">📊 团队现状总结</div>
+    <p style="font-size:13px;line-height:1.9;color:#94a3b8;margin-bottom:8px;">产品侧最大的不足，不一定是功能少，而是<strong style="color:var(--text)">核心卖点还不够聚焦</strong>，用户为什么留下来的理由还需要进一步强化。后续要重点优化用户体验、内容承接和转化路径。</p>
+    <p style="font-size:13px;line-height:1.9;color:#94a3b8;margin-bottom:8px;">人员上，需要提升<strong style="color:var(--text)">主动思考和结果负责意识</strong>；部分人员执行有余、主动推动不足。协同上，需要减少信息断层和重复沟通，提高整体执行效率。</p>
+    <p style="font-size:13px;line-height:1.9;color:#94a3b8;">接下来重点应该放在：<strong style="color:var(--blue)">明确目标、提高执行质量、强化复盘机制</strong>，让团队从「能做事」逐步走向「能持续做好事」。</p>
+  </div>
+
+  <!-- 五大维度 -->
+  <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;">🔍 五大评估维度</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-bottom:20px;">
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;border-left:4px solid var(--blue);">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <span style="font-size:13px;font-weight:700;">🚀 产品竞争力</span>
+        <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(245,158,11,.15);color:var(--orange);border:1px solid rgba(245,158,11,.3);font-weight:600;">需强化</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 定位是否清晰：用户群是谁，核心卖点是否足够明确</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 功能够不够打：有没有真正能留住用户的核心功能</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 转化链路顺不顺：下载→注册→付费→留存有没有卡点</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 内容/运营支撑：产品和运营是不是脱节</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 用户反馈闭环：问题收集后有没有真正推动优化</div>
+      </div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;border-left:4px solid var(--purple);">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <span style="font-size:13px;font-weight:700;">👥 人员匹配度</span>
+        <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(245,158,11,.15);color:var(--orange);border:1px solid rgba(245,158,11,.3);font-weight:600;">需提升</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 能力匹配度：岗位能力和实际工作要求是否匹配</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 执行效率：事情有没有推进慢、反复改、落地弱的问题</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 主动性：是等安排，还是会主动发现问题、推动结果</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 协作能力：跨部门沟通有没有断层</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 结果意识：是只做动作，还是关注最终数据和结果</div>
+      </div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;border-left:4px solid var(--orange);">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <span style="font-size:13px;font-weight:700;">⚡ 执行效率</span>
+        <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(245,158,11,.15);color:var(--orange);border:1px solid rgba(245,158,11,.3);font-weight:600;">需优化</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 信息传递是否顺畅：上下沟通有没有断层</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 节点是否可追踪：任务推进过程有没有清晰节点</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 需求变更是否频繁且无节奏</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 复盘是否有效：复盘有没有真正改变了什么</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 有没有形成标准化动作</div>
+      </div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;border-left:4px solid var(--cyan);">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <span style="font-size:13px;font-weight:700;">🤝 协同顺畅度</span>
+        <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(245,158,11,.15);color:var(--orange);border:1px solid rgba(245,158,11,.3);font-weight:600;">需关注</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 分工是否清晰：责任边界是否明确</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 跨部门对接时容易影响推进节奏</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 优先级是否统一：各方目标是否一致</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 出问题后是否容易互相等、互相推</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 奖惩和激励是否明确</div>
+      </div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;border-left:4px solid var(--green);">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <span style="font-size:13px;font-weight:700;">🎯 目标一致性</span>
+        <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3);font-weight:600;">关键指标</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 目标是否清晰：所有人是否知道自己阶段核心目标</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 结果导向：做了多少事，还是达成了多少结果</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 复盘优化能力：每次复盘有没有真正改变下次做法</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6;">· 管理机制是否完善：目标制定、追踪、奖惩闭路</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 产品层面详细 -->
+  <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;">🚀 产品层面详细分析</div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--card2);border-radius:8px;">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(59,130,246,.2);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;">1</div>
+        <div style="font-size:12px;line-height:1.7;color:#94a3b8;">产品亮点还不够强，用户感知价值还需要再放大。核心卖点需要更聚焦，让用户一眼能看到「我为什么要用这个产品」的理由。</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--card2);border-radius:8px;">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(168,85,247,.2);color:var(--purple);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;">2</div>
+        <div style="font-size:12px;line-height:1.7;color:#94a3b8;">转化链路中下载→注册→付费→留存各环节需逐一梳理，找到最大卡点重点突破。</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--card2);border-radius:8px;">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(245,158,11,.2);color:var(--orange);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;">3</div>
+        <div style="font-size:12px;line-height:1.7;color:#94a3b8;">内容和运营需要更紧密配合产品。用户反馈要形成闭环，不能只收集不推动。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 接下来重点 -->
+  <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;">🎯 接下来重点方向</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;">
+      <div style="width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;"></div>明确目标</div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;">
+      <div style="width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;"></div>提高执行质量</div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;">
+      <div style="width:8px;height:8px;border-radius:50%;background:var(--orange);flex-shrink:0;"></div>强化复盘机制</div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;">
+      <div style="width:8px;height:8px;border-radius:50%;background:var(--purple);flex-shrink:0;"></div>打磨产品辨识度</div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;">
+      <div style="width:8px;height:8px;border-radius:50%;background:var(--cyan);flex-shrink:0;"></div>提升人员责任感</div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;">
+      <div style="width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;"></div>跨部门协同机制跑顺</div>
   </div>
 </div>
 </div>
