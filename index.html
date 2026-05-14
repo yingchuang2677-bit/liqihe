@@ -363,9 +363,16 @@ async function loadData(){
     catch(e){const r=await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(CSV_URL));text=await r.text();}
     const rows=parseCSV(text), data=[];
     for(let i=3;i<rows.length;i++){
-      const r=rows[i], date=(r[0]||'').trim();
+      const r=rows[i]; let date=(r[0]||'').trim();
+      // 兼容「5月1日」和「2026-05-01」两种格式
+      if(date.match(/^\d+月\d+日$/)){
+        const m=date.match(/(\d+)月(\d+)日/);
+        date=`2026-05-${String(m[2]).padStart(2,'0')}`;
+      }
       if(!date.startsWith('2026'))continue;
-      data.push({date,dau:nv(r,2),rev:nv(r,4),new:nv(r,12),ad:nv(r,20),ops:nv(r,25),ch:nv(r,30),
+      // 列映射: 0=日期,1=总日活跃,2=日新增,3=投放,4=内部导量,5=充值,6=D1数据
+      // 汇总列: 列1=日活,列5=充值,列2=新增
+      data.push({date,dau:nv(r,1),rev:nv(r,5),new:nv(r,2),ad:nv(r,20),ops:nv(r,25),ch:nv(r,30),
         g1d:nv(r,35),g1n:nv(r,37),g1r:nv(r,41),g2d:nv(r,54),g2n:nv(r,56),g2r:nv(r,60)});
     }
     ALL_DATA=data.filter(d=>d.dau>0||d.rev>0);
