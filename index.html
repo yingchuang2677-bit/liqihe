@@ -22,7 +22,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'PingFang 
 .badge{background:#1e2840;border:1px solid var(--border);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--muted);}
 .rbtn{background:var(--blue);color:#fff;border:none;border-radius:20px;padding:5px 16px;font-size:12px;cursor:pointer;font-weight:600;}
 .rbtn:hover{opacity:.85;}
-.hkpi{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;}
+.hkpi{display:grid;grid-template-columns:repeat(9,1fr);gap:8px;}
 .hk{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:10px 12px;}
 .hk .lbl{font-size:11px;color:var(--muted);margin-bottom:3px;}
 .hk .val{font-size:18px;font-weight:700;} .hk .sub{font-size:11px;color:var(--muted);margin-top:1px;}
@@ -97,7 +97,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'PingFang 
 .focus-item{background:var(--card2);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;}
 .fi-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 @media(max-width:768px){
-  .hkpi{grid-template-columns:repeat(4,1fr);}
+  .hkpi{grid-template-columns:repeat(3,1fr);}
   .g2,.gg{grid-template-columns:1fr;}
   .g3{grid-template-columns:1fr 1fr;}
 }
@@ -124,6 +124,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'PingFang 
     <div class="hk"><div class="lbl">渠道开支</div><div class="val" style="color:var(--purple)" id="k-ch">-</div><div class="sub">月累计</div></div>
     <div class="hk" style="border-color:var(--blue)"><div class="lbl">5月总日活</div><div class="val" style="color:var(--blue)" id="k-month-dau">-</div><div class="sub" id="k-month-dau-sub"></div></div>
     <div class="hk" style="border-color:var(--cyan)"><div class="lbl">5月总注册</div><div class="val" style="color:var(--cyan)" id="k-month-new">-</div><div class="sub" id="k-month-new-sub"></div></div>
+    <div class="hk" style="border-color:var(--green)"><div class="lbl">5月总充值</div><div class="val" style="color:var(--green)" id="k-month-rev">-</div><div class="sub" id="k-month-rev-sub"></div></div>
   </div>
 </div>
 <div class="tabs">
@@ -410,6 +411,9 @@ function fillKPI(d){
   document.getElementById('k-month-dau-sub').textContent=`共${d.length}天数据`;
   document.getElementById('k-month-new').textContent=fmt(monthNew);
   document.getElementById('k-month-new-sub').textContent=`日均 ${fmt(Math.round(monthNew/d.length))}`;
+  const monthRev=d.reduce((s,x)=>s+x.rev,0);
+  document.getElementById('k-month-rev').textContent=fmt(monthRev);
+  document.getElementById('k-month-rev-sub').textContent=`日均 ${fmt(Math.round(monthRev/d.length))}`;
   document.getElementById('g1-dau').textContent=fmt(savg(d.map(x=>x.g1d)));
   document.getElementById('g1-rev').textContent=fmt(d.reduce((s,x)=>s+x.g1r,0));
   document.getElementById('g1-new').textContent=fmt(d.reduce((s,x)=>s+x.g1n,0));
