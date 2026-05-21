@@ -160,9 +160,9 @@ table.dt tbody tr:hover td{background:rgba(79,142,247,.04);}
   <div class="page active" id="page-overview">
     <div class="sec-title">📅 所选周期汇总</div>
     <div class="kpi-grid">
-      <div class="kpi-card c-blue"><div class="kpi-label">总日活（累计）</div><div class="kpi-val" id="k-total-dau">-</div><div class="kpi-sub" id="k-total-dau-sub">日均 -</div></div>
+      <div class="kpi-card c-blue"><div class="kpi-label">总日活（累计）</div><div class="kpi-val" id="k-total-dau">-</div><div class="kpi-sub" id="k-total-dau-sub">日均 -</div><div class="kpi-sub">目标 6,470,000 &nbsp;·&nbsp; 达成率 <span id="k-dau-rate" style="color:var(--blue);font-weight:700;">-</span></div></div>
       <div class="kpi-card c-cyan"><div class="kpi-label">总注册</div><div class="kpi-val" id="k-total-new">-</div><div class="kpi-sub" id="k-total-new-sub">日均 -</div></div>
-      <div class="kpi-card c-green"><div class="kpi-label">总充值</div><div class="kpi-val" id="k-total-rev">-</div><div class="kpi-sub" id="k-total-rev-sub">日均 -</div></div>
+      <div class="kpi-card c-green"><div class="kpi-label">总充值</div><div class="kpi-val" id="k-total-rev">-</div><div class="kpi-sub" id="k-total-rev-sub">日均 -</div><div class="kpi-sub">目标 1,511,500 &nbsp;·&nbsp; 达成率 <span id="k-rev-rate" style="color:var(--green);font-weight:700;">-</span></div></div>
       <div class="kpi-card c-orange"><div class="kpi-label">广告总收入</div><div class="kpi-val" id="k-total-ad">-</div><div class="kpi-sub">目标 3,500,000 &nbsp;·&nbsp; 达成率 <span id="k-ad-rate" style="color:var(--orange);font-weight:700;">-</span></div></div>
       <div class="kpi-card c-red"><div class="kpi-label">运营总支出</div><div class="kpi-val" id="k-total-ops">-</div><div class="kpi-sub">累计</div></div>
       <div class="kpi-card c-purple"><div class="kpi-label">渠道总支出</div><div class="kpi-val" id="k-total-ch">-</div><div class="kpi-sub">累计</div></div>
@@ -368,12 +368,16 @@ function render() {
 
 function fillKPI(d) {
   const last = d[d.length-1];
-  document.getElementById('k-total-dau').textContent = fmt(sum(d.map(x=>x.dau)));
+  const dauTotal = sum(d.map(x=>x.dau));
+  document.getElementById('k-total-dau').textContent = fmt(dauTotal);
   document.getElementById('k-total-dau-sub').textContent = '日均 '+fmt(Math.round(avg(d.map(x=>x.dau))));
+  document.getElementById('k-dau-rate').textContent = (dauTotal/6470000*100).toFixed(1)+'%';
   document.getElementById('k-total-new').textContent = fmt(sum(d.map(x=>x.new)));
   document.getElementById('k-total-new-sub').textContent = '日均 '+fmt(Math.round(avg(d.map(x=>x.new))));
-  document.getElementById('k-total-rev').textContent = fmt(sum(d.map(x=>x.rev)));
+  const revTotal = sum(d.map(x=>x.rev));
+  document.getElementById('k-total-rev').textContent = fmt(revTotal);
   document.getElementById('k-total-rev-sub').textContent = '日均 '+fmt(Math.round(avg(d.map(x=>x.rev))));
+  document.getElementById('k-rev-rate').textContent = (revTotal/1511500*100).toFixed(1)+'%';
   document.getElementById('k-total-ad').textContent = '1,624,654';
   document.getElementById('k-ad-rate').textContent = (1624654/3500000*100).toFixed(1)+'%';
   document.getElementById('k-total-ops').textContent = '69,000';
