@@ -166,6 +166,7 @@ table.dt tbody tr:hover td{background:rgba(79,142,247,.04);}
       <div class="kpi-card c-orange"><div class="kpi-label">广告总收入</div><div class="kpi-val" id="k-total-ad">-</div><div class="kpi-sub">目标 3,500,000 &nbsp;·&nbsp; 达成率 <span id="k-ad-rate" style="color:var(--orange);font-weight:700;">-</span></div></div>
       <div class="kpi-card c-red"><div class="kpi-label">运营总支出</div><div class="kpi-val" id="k-total-ops">-</div><div class="kpi-sub">累计</div></div>
       <div class="kpi-card c-purple"><div class="kpi-label">渠道总支出</div><div class="kpi-val" id="k-total-ch">-</div><div class="kpi-sub">累计</div></div>
+      <div class="kpi-card c-green" style="grid-column:1/-1;"><div class="kpi-label">💰 5月净利润</div><div class="kpi-val" id="k-total-profit" style="font-size:32px;">-</div><div class="kpi-sub">广告收益 + 充值 − 运营支出 − 渠道支出</div></div>
     </div>
     <div class="sec-title">⚡ 最新一日数据</div>
     <div class="today-row">
@@ -387,8 +388,9 @@ function fillKPI(d) {
   document.getElementById('k-rev-rate').textContent = (revTotal/1511500*100).toFixed(1)+'%';
   document.getElementById('k-total-ad').textContent = '3,544,377';
   document.getElementById('k-ad-rate').textContent = (3544377/3500000*100).toFixed(1)+'%';
-  document.getElementById('k-total-ops').textContent = '69,000';
-  document.getElementById('k-total-ch').textContent = '449,956';
+  document.getElementById('k-total-ops').textContent = '100,000';
+  document.getElementById('k-total-ch').textContent = '947,482';
+  document.getElementById('k-total-profit').textContent = '3,667,430.10';
   const [,m,day] = last.date.split('-');
   const dateStr = `${parseInt(m)}月${parseInt(day)}日`;
   document.getElementById('k-today-dau').textContent = fmt(last.dau);
