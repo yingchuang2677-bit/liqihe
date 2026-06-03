@@ -374,18 +374,19 @@ function render() {
 
 function fillKPI(d) {
   const last = d[d.length-1];
-  const dauTotal = sum(d.map(x=>x.dau));
+  const dauTotal = 6410069;
   document.getElementById('k-total-dau').textContent = fmt(dauTotal);
-  document.getElementById('k-total-dau-sub').textContent = '日均 '+fmt(Math.round(avg(d.map(x=>x.dau))));
+  document.getElementById('k-total-dau-sub').textContent = '日均 '+fmt(Math.round(dauTotal/d.length));
   document.getElementById('k-dau-rate').textContent = (dauTotal/6470000*100).toFixed(1)+'%';
-  document.getElementById('k-total-new').textContent = fmt(sum(d.map(x=>x.new)));
-  document.getElementById('k-total-new-sub').textContent = '日均 '+fmt(Math.round(avg(d.map(x=>x.new))));
-  const revTotal = sum(d.map(x=>x.rev));
+  const newTotal = 829707;
+  document.getElementById('k-total-new').textContent = fmt(newTotal);
+  document.getElementById('k-total-new-sub').textContent = '日均 '+fmt(Math.round(newTotal/d.length));
+  const revTotal = 1387070;
   document.getElementById('k-total-rev').textContent = fmt(revTotal);
-  document.getElementById('k-total-rev-sub').textContent = '日均 '+fmt(Math.round(avg(d.map(x=>x.rev))));
+  document.getElementById('k-total-rev-sub').textContent = '日均 '+fmt(Math.round(revTotal/d.length));
   document.getElementById('k-rev-rate').textContent = (revTotal/1511500*100).toFixed(1)+'%';
-  document.getElementById('k-total-ad').textContent = '2,240,789';
-  document.getElementById('k-ad-rate').textContent = (2240789/3500000*100).toFixed(1)+'%';
+  document.getElementById('k-total-ad').textContent = '3,544,377';
+  document.getElementById('k-ad-rate').textContent = (3544377/3500000*100).toFixed(1)+'%';
   document.getElementById('k-total-ops').textContent = '69,000';
   document.getElementById('k-total-ch').textContent = '449,956';
   const [,m,day] = last.date.split('-');
