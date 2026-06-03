@@ -109,6 +109,13 @@ table.dt tbody tr:hover td{background:rgba(79,142,247,.04);}
 .member-role{font-size:11px;color:var(--sub);line-height:1.4;}
 .sec-title{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
 .sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:10px;}
+.proj-card{background:var(--card2);border-radius:var(--radius);padding:14px 16px;border-top:3px solid var(--blue);transition:transform .15s,border-color .2s;}
+.proj-card:hover{transform:translateY(-2px);}
+.proj-card.p2{border-top-color:var(--purple);}
+.proj-name{font-size:14px;font-weight:800;color:var(--text);margin-bottom:6px;}
+.proj-owner{font-size:11px;color:var(--sub);line-height:1.6;}
+.proj-owner span{color:var(--text);font-weight:600;}
 @media(max-width:900px){
   #sidebar{width:56px;}
   #sidebar .logo-title,#sidebar .logo-sub,#sidebar .nav-item span,#sidebar .refresh-btn{display:none;}
@@ -135,6 +142,7 @@ table.dt tbody tr:hover td{background:rgba(79,142,247,.04);}
     <div class="nav-item" onclick="sw(this,'group')"><span class="nav-icon">👥</span><span>分组对比</span></div>
     <div class="nav-item" onclick="sw(this,'detail')"><span class="nav-icon">📋</span><span>每日明细</span></div>
     <div class="nav-item" onclick="sw(this,'team')"><span class="nav-icon">🏠</span><span>人员</span></div>
+    <div class="nav-item" onclick="sw(this,'project')"><span class="nav-icon">📱</span><span>项目明细</span></div>
   </div>
   <div class="sidebar-bottom"><button class="refresh-btn" onclick="loadData()">↻ 刷新数据</button></div>
 </nav>
@@ -255,6 +263,72 @@ table.dt tbody tr:hover td{background:rgba(79,142,247,.04);}
       </div>
     </div>
   </div>
+  <div class="page" id="page-project">
+    <div class="chart-row g2" style="margin-bottom:12px;">
+      <div class="chart-card">
+        <div class="sec-title">1组 · 李其和 项目（9个）</div>
+        <div class="proj-grid">
+          <div class="proj-card">
+            <div class="proj-name">撸啊撸</div>
+            <div class="proj-owner">主运营 <span>Allen</span><br>协助 <span>文盼</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-name">抖音Ultra</div>
+            <div class="proj-owner">负责人 <span>平安</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-name">51社区</div>
+            <div class="proj-owner">负责人 <span>平安</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-name">中国p站</div>
+            <div class="proj-owner">负责人 <span>骆山河</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-name">Hello!学妹</div>
+            <div class="proj-owner">负责人 <span>骆山河</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-name">追片神器</div>
+            <div class="proj-owner">负责人 <span>沈坤</span> · <span>Denzel</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-name">香奶兒</div>
+            <div class="proj-owner">负责人 <span>沈坤</span> · <span>Denzel</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-name">小优短视频</div>
+            <div class="proj-owner">负责人 <span>叮咚</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-name">奶头乐</div>
+            <div class="proj-owner">负责人 <span>叮咚</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="sec-title">2组 · 苏杰西 项目（4个）</div>
+        <div class="proj-grid">
+          <div class="proj-card p2">
+            <div class="proj-name">杏吧</div>
+            <div class="proj-owner">负责人 <span>张百胜</span> · <span>白敬</span> · <span>James</span></div>
+          </div>
+          <div class="proj-card p2">
+            <div class="proj-name">杏吧剪辑</div>
+            <div class="proj-owner">负责人 <span>凯晨</span> · <span>欧丹</span> · <span>秋容</span></div>
+          </div>
+          <div class="proj-card p2">
+            <div class="proj-name">抖阴破解</div>
+            <div class="proj-owner">负责人 <span>李禾</span></div>
+          </div>
+          <div class="proj-card p2">
+            <div class="proj-name">DeepSeek</div>
+            <div class="proj-owner">负责人 <span>李禾</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
 <script>
@@ -265,7 +339,7 @@ const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?forma
 let ALL_DATA = [];
 let FILTERED = [];
 let CHARTS = {};
-const PAGE_TITLES = {overview:'总览',group:'分组对比',detail:'每日明细',team:'人员'};
+const PAGE_TITLES = {overview:'总览',group:'分组对比',detail:'每日明细',team:'人员',project:'项目明细'};
 
 function parseCSV(t) {
   const rows = []; let cur = [], f = '', q = false;
