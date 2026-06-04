@@ -114,8 +114,13 @@ table.dt tbody tr:hover td{background:rgba(79,142,247,.04);}
 .proj-card:hover{transform:translateY(-2px);}
 .proj-card.p2{border-top-color:var(--purple);}
 .proj-name{font-size:14px;font-weight:800;color:var(--text);margin-bottom:6px;}
-.proj-owner{font-size:11px;color:var(--sub);line-height:1.6;}
+.proj-owner{font-size:11px;color:var(--sub);line-height:1.6;margin-bottom:2px;}
 .proj-owner span{color:var(--text);font-weight:600;}
+.proj-stats{display:flex;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+.proj-stat{flex:1;text-align:center;}
+.proj-stat-l{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;}
+.proj-stat-v{font-size:12px;font-weight:800;font-family:'DM Mono',monospace;color:var(--blue);}
+.proj-card.p2 .proj-stat-v{color:var(--purple);}
 @media(max-width:900px){
   #sidebar{width:56px;}
   #sidebar .logo-title,#sidebar .logo-sub,#sidebar .nav-item span,#sidebar .refresh-btn{display:none;}
@@ -266,64 +271,120 @@ table.dt tbody tr:hover td{background:rgba(79,142,247,.04);}
   <div class="page" id="page-project">
     <div class="chart-row g2" style="margin-bottom:12px;">
       <div class="chart-card">
-        <div class="sec-title">1组 · 李其和 项目（9个）</div>
+        <div class="sec-title">1组 · 李其和 项目（7个）</div>
         <div class="proj-grid">
           <div class="proj-card">
             <div class="proj-name">撸啊撸</div>
-            <div class="proj-owner">主运营 <span>Allen</span><br>协助 <span>文盼</span></div>
+            <div class="proj-owner">主运营 <span>Allen</span> · 协助 <span>文盼</span></div>
+            <div class="proj-stats">
+              <div class="proj-stat"><div class="proj-stat-l">日活</div><div class="proj-stat-v" id="pj-lal-d">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">新增</div><div class="proj-stat-v" id="pj-lal-n">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">充值</div><div class="proj-stat-v" id="pj-lal-r">-</div></div>
+            </div>
           </div>
           <div class="proj-card">
-            <div class="proj-name">抖音Ultra</div>
-            <div class="proj-owner">负责人 <span>平安</span></div>
+            <div class="proj-name">DeepSeek</div>
+            <div class="proj-owner">负责人 <span>李禾</span></div>
+            <div class="proj-stats">
+              <div class="proj-stat"><div class="proj-stat-l">日活</div><div class="proj-stat-v" id="pj-ds-d">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">新增</div><div class="proj-stat-v" id="pj-ds-n">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">充值</div><div class="proj-stat-v" id="pj-ds-r">-</div></div>
+            </div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-name">中国P站</div>
+            <div class="proj-owner">负责人 <span>骆山河</span></div>
+            <div class="proj-stats">
+              <div class="proj-stat"><div class="proj-stat-l">日活</div><div class="proj-stat-v" id="pj-cnp-d">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">新增</div><div class="proj-stat-v" id="pj-cnp-n">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">充值</div><div class="proj-stat-v" id="pj-cnp-r">-</div></div>
+            </div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-name">抖音破解版</div>
+            <div class="proj-owner">负责人 <span>李禾</span></div>
+            <div class="proj-stats">
+              <div class="proj-stat"><div class="proj-stat-l">日活</div><div class="proj-stat-v" id="pj-dypj-d">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">新增</div><div class="proj-stat-v" id="pj-dypj-n">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">充值</div><div class="proj-stat-v" id="pj-dypj-r">-</div></div>
+            </div>
           </div>
           <div class="proj-card">
             <div class="proj-name">51社区</div>
             <div class="proj-owner">负责人 <span>平安</span></div>
-          </div>
-          <div class="proj-card">
-            <div class="proj-name">中国p站</div>
-            <div class="proj-owner">负责人 <span>骆山河</span></div>
+            <div class="proj-stats">
+              <div class="proj-stat"><div class="proj-stat-l">日活</div><div class="proj-stat-v" id="pj-w51-d">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">新增</div><div class="proj-stat-v" id="pj-w51-n">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">充值</div><div class="proj-stat-v" id="pj-w51-r">-</div></div>
+            </div>
           </div>
           <div class="proj-card">
             <div class="proj-name">Hello!学妹</div>
             <div class="proj-owner">负责人 <span>骆山河</span></div>
+            <div class="proj-stats">
+              <div class="proj-stat"><div class="proj-stat-l">日活</div><div class="proj-stat-v" id="pj-hlxm-d">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">新增</div><div class="proj-stat-v" id="pj-hlxm-n">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">充值</div><div class="proj-stat-v" id="pj-hlxm-r">-</div></div>
+            </div>
           </div>
           <div class="proj-card">
-            <div class="proj-name">追片神器</div>
-            <div class="proj-owner">负责人 <span>沈坤</span> · <span>Denzel</span></div>
-          </div>
-          <div class="proj-card">
-            <div class="proj-name">香奶兒</div>
-            <div class="proj-owner">负责人 <span>沈坤</span> · <span>Denzel</span></div>
-          </div>
-          <div class="proj-card">
-            <div class="proj-name">小优短视频</div>
-            <div class="proj-owner">负责人 <span>叮咚</span></div>
-          </div>
-          <div class="proj-card">
-            <div class="proj-name">奶头乐</div>
-            <div class="proj-owner">负责人 <span>叮咚</span></div>
+            <div class="proj-name">抖音Ultra</div>
+            <div class="proj-owner">负责人 <span>平安</span></div>
+            <div class="proj-stats">
+              <div class="proj-stat"><div class="proj-stat-l">日活</div><div class="proj-stat-v" id="pj-dyul-d">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">新增</div><div class="proj-stat-v" id="pj-dyul-n">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">充值</div><div class="proj-stat-v" id="pj-dyul-r">-</div></div>
+            </div>
           </div>
         </div>
       </div>
       <div class="chart-card">
-        <div class="sec-title">2组 · 苏杰西 项目（4个）</div>
+        <div class="sec-title">2组 · 苏杰西 项目（5个）</div>
         <div class="proj-grid">
           <div class="proj-card p2">
             <div class="proj-name">杏吧</div>
-            <div class="proj-owner">负责人 <span>张百胜</span> · <span>白敬</span> · <span>James</span></div>
+            <div class="proj-owner"><span>张百胜</span> · <span>白敬</span> · <span>James</span> · <span>凯晨</span> · <span>欧丹</span> · <span>秋容</span></div>
+            <div class="proj-stats">
+              <div class="proj-stat"><div class="proj-stat-l">日活</div><div class="proj-stat-v" id="pj-xb-d">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">新增</div><div class="proj-stat-v" id="pj-xb-n">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">充值</div><div class="proj-stat-v" id="pj-xb-r">-</div></div>
+            </div>
           </div>
           <div class="proj-card p2">
-            <div class="proj-name">杏吧剪辑</div>
-            <div class="proj-owner">负责人 <span>凯晨</span> · <span>欧丹</span> · <span>秋容</span></div>
+            <div class="proj-name">小优短视频</div>
+            <div class="proj-owner">负责人 <span>叮咚</span></div>
+            <div class="proj-stats">
+              <div class="proj-stat"><div class="proj-stat-l">日活</div><div class="proj-stat-v" id="pj-xydsp-d">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">新增</div><div class="proj-stat-v" id="pj-xydsp-n">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">充值</div><div class="proj-stat-v" id="pj-xydsp-r">-</div></div>
+            </div>
           </div>
           <div class="proj-card p2">
-            <div class="proj-name">抖阴破解</div>
-            <div class="proj-owner">负责人 <span>李禾</span></div>
+            <div class="proj-name">奶头乐</div>
+            <div class="proj-owner">负责人 <span>叮咚</span></div>
+            <div class="proj-stats">
+              <div class="proj-stat"><div class="proj-stat-l">日活</div><div class="proj-stat-v" id="pj-ntl-d">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">新增</div><div class="proj-stat-v" id="pj-ntl-n">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">充值</div><div class="proj-stat-v" id="pj-ntl-r">-</div></div>
+            </div>
           </div>
           <div class="proj-card p2">
-            <div class="proj-name">DeepSeek</div>
-            <div class="proj-owner">负责人 <span>李禾</span></div>
+            <div class="proj-name">香奶兒</div>
+            <div class="proj-owner">负责人 <span>沈坤</span> · <span>Denzel</span></div>
+            <div class="proj-stats">
+              <div class="proj-stat"><div class="proj-stat-l">日活</div><div class="proj-stat-v" id="pj-xne-d">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">新增</div><div class="proj-stat-v" id="pj-xne-n">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">充值</div><div class="proj-stat-v" id="pj-xne-r">-</div></div>
+            </div>
+          </div>
+          <div class="proj-card p2">
+            <div class="proj-name">追片神器</div>
+            <div class="proj-owner">负责人 <span>沈坤</span> · <span>Denzel</span></div>
+            <div class="proj-stats">
+              <div class="proj-stat"><div class="proj-stat-l">日活</div><div class="proj-stat-v" id="pj-zpq-d">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">新增</div><div class="proj-stat-v" id="pj-zpq-n">-</div></div>
+              <div class="proj-stat"><div class="proj-stat-l">充值</div><div class="proj-stat-v" id="pj-zpq-r">-</div></div>
+            </div>
           </div>
         </div>
       </div>
@@ -335,8 +396,24 @@ table.dt tbody tr:hover td{background:rgba(79,142,247,.04);}
 const SHEET_ID = '18kVtCVu0CgKyIncH1ohp7BajP9qM_DaRbsTRaF6n6y0';
 const GID = '1797753147';
 const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
+const PROJ_CSV_URL = `https://docs.google.com/spreadsheets/d/1YdpJNveREAB08wUQL6L-eXtOfaxeKDXVYjATiiQMKrk/export?format=csv&gid=1432253388`;
+const PROJECTS = [
+  {id:'lal',  dau:19,nw:21,rv:23},
+  {id:'ds',   dau:25,nw:27,rv:29},
+  {id:'cnp',  dau:31,nw:33,rv:35},
+  {id:'dypj', dau:37,nw:39,rv:41},
+  {id:'w51',  dau:43,nw:45,rv:47},
+  {id:'hlxm', dau:49,nw:51,rv:53},
+  {id:'dyul', dau:55,nw:57,rv:59},
+  {id:'xb',   dau:61,nw:63,rv:65},
+  {id:'xydsp',dau:67,nw:69,rv:71},
+  {id:'ntl',  dau:73,nw:75,rv:77},
+  {id:'xne',  dau:79,nw:81,rv:83},
+  {id:'zpq',  dau:85,nw:87,rv:89},
+];
 
 let ALL_DATA = [];
+let ALL_PROJ_DATA = [];
 let FILTERED = [];
 let CHARTS = {};
 const PAGE_TITLES = {overview:'总览',group:'分组对比',detail:'每日明细',team:'人员',project:'项目明细'};
@@ -393,6 +470,7 @@ async function loadData() {
     document.getElementById('loading').style.display='none';
     document.getElementById('app').style.display='block';
     document.getElementById('last-update').textContent = new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});
+    loadProjectData();
   } catch(e) {
     document.getElementById('load-msg').textContent='加载失败: '+e.message+' — 请点刷新';
   }
@@ -437,6 +515,53 @@ function applyFilter() {
   });
   if (FILTERED.length===0 && ALL_DATA.length>0) FILTERED = ALL_DATA;
   render();
+  fillProjectData();
+}
+
+async function loadProjectData() {
+  try {
+    let text;
+    try { const r = await fetch(PROJ_CSV_URL); text = await r.text(); }
+    catch(e) { const r = await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(PROJ_CSV_URL)); text = await r.text(); }
+    const rows = parseCSV(text);
+    const data = [];
+    for (let i = 2; i < rows.length; i++) {
+      const r = rows[i];
+      const date = (r[0]||'').trim();
+      if (!date.match(/^\d{4}-\d{2}-\d{2}$/)) continue;
+      if (PROJECTS.every(p => nv(r,p.dau)===0)) continue;
+      const entry = {date};
+      PROJECTS.forEach(p => {
+        entry[p.id+'_d'] = nv(r,p.dau);
+        entry[p.id+'_n'] = nv(r,p.nw);
+        entry[p.id+'_r'] = nv(r,p.rv);
+      });
+      data.push(entry);
+    }
+    ALL_PROJ_DATA = data;
+    fillProjectData();
+  } catch(e) { console.error('项目数据加载失败',e); }
+}
+
+function fillProjectData() {
+  const month = document.getElementById('sel-month').value;
+  const date  = document.getElementById('sel-date').value;
+  const fd = ALL_PROJ_DATA.filter(d => {
+    if (month !== 'all' && !d.date.startsWith(month)) return false;
+    if (date  !== 'all' && d.date !== date)            return false;
+    return true;
+  });
+  PROJECTS.forEach(p => {
+    const dEl = document.getElementById('pj-'+p.id+'-d');
+    const nEl = document.getElementById('pj-'+p.id+'-n');
+    const rEl = document.getElementById('pj-'+p.id+'-r');
+    const dv = fd.length ? fmt(sum(fd.map(x=>x[p.id+'_d']))) : '-';
+    const nv2= fd.length ? fmt(sum(fd.map(x=>x[p.id+'_n']))) : '-';
+    const rv = fd.length ? fmt(sum(fd.map(x=>x[p.id+'_r']))) : '-';
+    if (dEl) dEl.textContent = dv;
+    if (nEl) nEl.textContent = nv2;
+    if (rEl) rEl.textContent = rv;
+  });
 }
 
 function render() {
