@@ -521,8 +521,11 @@ function applyFilter() {
 async function loadProjectData() {
   try {
     let text;
-    try { const r = await fetch(PROJ_CSV_URL); text = await r.text(); }
-    catch(e) { const r = await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(PROJ_CSV_URL)); text = await r.text(); }
+    try {
+      const r = await fetch(PROJ_CSV_URL); const t = await r.text();
+      if (t.trim().startsWith('<')) throw new Error('got HTML');
+      text = t;
+    } catch(e) { const r = await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(PROJ_CSV_URL)); text = await r.text(); }
     const rows = parseCSV(text);
     const data = [];
     for (let i = 2; i < rows.length; i++) {
