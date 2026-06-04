@@ -179,6 +179,7 @@ table.dt tbody tr:hover td{background:rgba(79,142,247,.04);}
       <div class="kpi-card c-orange"><div class="kpi-label">广告总收入</div><div class="kpi-val" id="k-total-ad">-</div><div class="kpi-sub">目标 3,500,000 &nbsp;·&nbsp; 达成率 <span id="k-ad-rate" style="color:var(--orange);font-weight:700;">-</span></div></div>
       <div class="kpi-card c-red"><div class="kpi-label">运营总支出</div><div class="kpi-val" id="k-total-ops">-</div><div class="kpi-sub">累计</div></div>
       <div class="kpi-card c-purple"><div class="kpi-label">渠道总支出</div><div class="kpi-val" id="k-total-ch">-</div><div class="kpi-sub">累计</div></div>
+      <div id="k-biz-card" class="kpi-card c-cyan" style="display:none;"><div class="kpi-label">💼 商务收入</div><div class="kpi-val" id="k-total-biz">-</div><div class="kpi-sub">累计</div></div>
       <div id="k-profit-card" class="kpi-card c-green" style="grid-column:1/-1;display:none;"><div class="kpi-label">💰 5月净利润</div><div class="kpi-val" id="k-total-profit" style="font-size:32px;">-</div><div class="kpi-sub">广告收益 + 充值 − 运营支出 − 渠道支出</div></div>
     </div>
     <div class="sec-title">⚡ 最新一日数据</div>
@@ -578,7 +579,8 @@ function render() {
 function fillKPI(d) {
   const last = d[d.length-1];
   const month = document.getElementById('sel-month').value;
-  const isMay = month === '2026-05';
+  const isMay  = month === '2026-05';
+  const isJune = month === '2026-06';
 
   // 月份目标配置
   const TARGETS = {
@@ -612,8 +614,17 @@ function fillKPI(d) {
   document.getElementById('k-ad-rate').textContent = (adTotal/T.ad*100).toFixed(1)+'%';
 
   // 支出
-  document.getElementById('k-total-ops').textContent = isMay ? '100,000' : fmt(sum(d.map(x=>x.ops)));
-  document.getElementById('k-total-ch').textContent = isMay ? '947,482' : fmt(sum(d.map(x=>x.ch)));
+  document.getElementById('k-total-ops').textContent = isMay ? '100,000' : (isJune ? '0' : fmt(sum(d.map(x=>x.ops))));
+  document.getElementById('k-total-ch').textContent  = isMay ? '947,482' : (isJune ? '33,500' : fmt(sum(d.map(x=>x.ch))));
+
+  // 商务收入（6月显示）
+  const bizCard = document.getElementById('k-biz-card');
+  if (isJune) {
+    bizCard.style.display = '';
+    document.getElementById('k-total-biz').textContent = '566,632';
+  } else {
+    bizCard.style.display = 'none';
+  }
 
   // 利润（仅5月显示）
   const profitCard = document.getElementById('k-profit-card');
