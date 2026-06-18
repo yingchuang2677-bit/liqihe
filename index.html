@@ -610,13 +610,13 @@ function fillKPI(d) {
   document.getElementById('k-rev-rate').textContent = (revTotal/T.rev*100).toFixed(1)+'%';
 
   // 广告
-  const adTotal = isMay ? 3544377 : (isJune ? 1940323 : sum(d.map(x=>x.ad)));
+  const adTotal = isMay ? 3544377 : (isJune ? 2350047 : sum(d.map(x=>x.ad)));
   document.getElementById('k-total-ad').textContent = fmt(adTotal);
   document.getElementById('k-ad-rate').textContent = (adTotal/T.ad*100).toFixed(1)+'%';
 
   // 支出
-  document.getElementById('k-total-ops').textContent = isMay ? '100,000' : (isJune ? '20,003' : fmt(sum(d.map(x=>x.ops))));
-  document.getElementById('k-total-ch').textContent  = isMay ? '947,482' : (isJune ? '268,285' : fmt(sum(d.map(x=>x.ch))));
+  document.getElementById('k-total-ops').textContent = isMay ? '100,000' : (isJune ? '50,503' : fmt(sum(d.map(x=>x.ops))));
+  document.getElementById('k-total-ch').textContent  = isMay ? '947,482' : (isJune ? '292,058' : fmt(sum(d.map(x=>x.ch))));
 
   // 利润（仅5月显示）
   const profitCard = document.getElementById('k-profit-card');
