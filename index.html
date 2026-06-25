@@ -646,7 +646,8 @@ function setWeekCell(curId, prevId, diffId, rateId, cur, prev, hasPrev) {
   const diff = cur - prev;
   const rate = diff / prev * 100;
   const up = diff >= 0;
-  diffEl.textContent = (up?'+':'')+fmt(diff);  diffEl.className = up?'wk-up':'wk-dn';
+  diffEl.textContent = (up?'+':'-')+Math.abs(Math.round(diff)).toLocaleString();
+  diffEl.className = up?'wk-up':'wk-dn';
   rateEl.textContent = (up?'+':'')+rate.toFixed(1)+'%'; rateEl.className = up?'wk-up':'wk-dn';
 }
 
