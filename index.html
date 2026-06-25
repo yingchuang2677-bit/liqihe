@@ -610,19 +610,27 @@ function fillKPI(d) {
   document.getElementById('k-rev-rate').textContent = (revTotal/T.rev*100).toFixed(1)+'%';
 
   // 广告
-  const adTotal = isMay ? 3544377 : (isJune ? 2350047 : sum(d.map(x=>x.ad)));
+  const adTotal = isMay ? 3544377 : (isJune ? 3436071 : sum(d.map(x=>x.ad)));
   document.getElementById('k-total-ad').textContent = fmt(adTotal);
   document.getElementById('k-ad-rate').textContent = (adTotal/T.ad*100).toFixed(1)+'%';
 
   // 支出
-  document.getElementById('k-total-ops').textContent = isMay ? '100,000' : (isJune ? '50,503' : fmt(sum(d.map(x=>x.ops))));
-  document.getElementById('k-total-ch').textContent  = isMay ? '947,482' : (isJune ? '292,058' : fmt(sum(d.map(x=>x.ch))));
+  const juneOps = 54563, juneCh = 392414;
+  document.getElementById('k-total-ops').textContent = isMay ? '100,000' : (isJune ? fmt(juneOps) : fmt(sum(d.map(x=>x.ops))));
+  document.getElementById('k-total-ch').textContent  = isMay ? '947,482' : (isJune ? fmt(juneCh) : fmt(sum(d.map(x=>x.ch))));
 
-  // 利润（仅5月显示）
+  // 利润
   const profitCard = document.getElementById('k-profit-card');
+  const profitLabel = profitCard.querySelector('.kpi-label');
   if (isMay) {
     profitCard.style.display = '';
+    profitLabel.textContent = '💰 5月净利润';
     document.getElementById('k-total-profit').textContent = '3,667,430.10';
+  } else if (isJune) {
+    profitCard.style.display = '';
+    profitLabel.textContent = '💰 6月净利润';
+    const profit = adTotal + revTotal - juneOps - juneCh;
+    document.getElementById('k-total-profit').textContent = fmt(Math.round(profit));
   } else {
     profitCard.style.display = 'none';
   }
