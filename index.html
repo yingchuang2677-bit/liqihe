@@ -135,6 +135,22 @@ table.dt tbody tr:hover td{background:rgba(79,142,247,.04);}
   .kpi-grid{grid-template-columns:1fr 1fr;}
   .today-row{grid-template-columns:1fr;}
 }
+/* ---- 周数据对比 ---- */
+.week-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:16px;}
+.week-date-range{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:12px;display:flex;gap:16px;}
+.week-date-range span{color:var(--sub);}
+.wt{width:100%;border-collapse:collapse;}
+.wt th{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:6px 10px;text-align:right;border-bottom:1px solid var(--border);}
+.wt th:first-child{text-align:left;}
+.wt td{padding:7px 10px;text-align:right;font-family:'DM Mono',monospace;font-size:13px;border-bottom:1px solid rgba(26,34,54,.45);color:var(--text);}
+.wt td:first-child{text-align:left;font-family:'Sora',sans-serif;font-size:11px;color:var(--sub);font-weight:600;white-space:nowrap;}
+.wt tr:last-child td{border-bottom:none;}
+.wk-up{color:var(--green)!important;font-weight:700;}
+.wk-dn{color:var(--red)!important;font-weight:700;}
+.week-prod-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.week-prod-card{background:var(--card2);border-radius:var(--radius-sm);padding:14px 16px;}
+.week-prod-title{font-size:13px;font-weight:800;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+@media(max-width:700px){.week-prod-row{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -180,6 +196,42 @@ table.dt tbody tr:hover td{background:rgba(79,142,247,.04);}
       <div class="kpi-card c-red"><div class="kpi-label">运营总支出</div><div class="kpi-val" id="k-total-ops">-</div><div class="kpi-sub">累计</div></div>
       <div class="kpi-card c-purple"><div class="kpi-label">渠道总支出</div><div class="kpi-val" id="k-total-ch">-</div><div class="kpi-sub">累计</div></div>
 <div id="k-profit-card" class="kpi-card c-green" style="grid-column:1/-1;display:none;"><div class="kpi-label">💰 5月净利润</div><div class="kpi-val" id="k-total-profit" style="font-size:32px;">-</div><div class="kpi-sub">广告收益 + 充值 − 运营支出 − 渠道支出</div></div>
+    </div>
+    <div class="sec-title">📊 周数据对比<span style="font-size:10px;margin-left:8px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">7天周期 · 环比上周</span></div>
+    <div class="week-block">
+      <div class="week-date-range" id="w-date-range"><span id="w-cur-range">本周 —</span><span id="w-prev-range">上周 —</span></div>
+      <table class="wt" style="margin-bottom:14px;">
+        <thead><tr><th>指标</th><th>本周</th><th>上周</th><th>差额</th><th>环比</th></tr></thead>
+        <tbody>
+          <tr><td>总日活</td><td id="wc-dau-cur">-</td><td id="wc-dau-prev">-</td><td id="wc-dau-diff">-</td><td id="wc-dau-rate">-</td></tr>
+          <tr><td>总注册</td><td id="wc-new-cur">-</td><td id="wc-new-prev">-</td><td id="wc-new-diff">-</td><td id="wc-new-rate">-</td></tr>
+          <tr><td>总充值</td><td id="wc-rev-cur">-</td><td id="wc-rev-prev">-</td><td id="wc-rev-diff">-</td><td id="wc-rev-rate">-</td></tr>
+        </tbody>
+      </table>
+      <div class="week-prod-row">
+        <div class="week-prod-card">
+          <div class="week-prod-title">🎮 撸啊撸</div>
+          <table class="wt">
+            <thead><tr><th>指标</th><th>本周</th><th>上周</th><th>差额</th><th>环比</th></tr></thead>
+            <tbody>
+              <tr><td>日活</td><td id="wp-lal-dau-cur">-</td><td id="wp-lal-dau-prev">-</td><td id="wp-lal-dau-diff">-</td><td id="wp-lal-dau-rate">-</td></tr>
+              <tr><td>新增</td><td id="wp-lal-new-cur">-</td><td id="wp-lal-new-prev">-</td><td id="wp-lal-new-diff">-</td><td id="wp-lal-new-rate">-</td></tr>
+              <tr><td>充值</td><td id="wp-lal-rev-cur">-</td><td id="wp-lal-rev-prev">-</td><td id="wp-lal-rev-diff">-</td><td id="wp-lal-rev-rate">-</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="week-prod-card">
+          <div class="week-prod-title">🍑 杏吧</div>
+          <table class="wt">
+            <thead><tr><th>指标</th><th>本周</th><th>上周</th><th>差额</th><th>环比</th></tr></thead>
+            <tbody>
+              <tr><td>日活</td><td id="wp-xb-dau-cur">-</td><td id="wp-xb-dau-prev">-</td><td id="wp-xb-dau-diff">-</td><td id="wp-xb-dau-rate">-</td></tr>
+              <tr><td>新增</td><td id="wp-xb-new-cur">-</td><td id="wp-xb-new-prev">-</td><td id="wp-xb-new-diff">-</td><td id="wp-xb-new-rate">-</td></tr>
+              <tr><td>充值</td><td id="wp-xb-rev-cur">-</td><td id="wp-xb-rev-prev">-</td><td id="wp-xb-rev-diff">-</td><td id="wp-xb-rev-rate">-</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <div class="sec-title">⚡ 最新一日数据</div>
     <div class="today-row">
@@ -567,6 +619,50 @@ function fillProjectData() {
     if (nEl) nEl.textContent = nv2;
     if (rEl) rEl.textContent = rv;
   });
+  fillWeeklyData();
+}
+
+function setWeekCell(curId, prevId, diffId, rateId, cur, prev, hasPrev) {
+  document.getElementById(curId).textContent = cur > 0 ? fmt(cur) : '-';
+  document.getElementById(prevId).textContent = (hasPrev && prev > 0) ? fmt(prev) : '-';
+  const diffEl = document.getElementById(diffId);
+  const rateEl = document.getElementById(rateId);
+  if (!hasPrev || prev === 0) { diffEl.textContent='-'; diffEl.className=''; rateEl.textContent='-'; rateEl.className=''; return; }
+  const diff = cur - prev;
+  const rate = diff / prev * 100;
+  const up = diff >= 0;
+  diffEl.textContent = (up?'+':'')+fmt(diff);  diffEl.className = up?'wk-up':'wk-dn';
+  rateEl.textContent = (up?'+':'')+rate.toFixed(1)+'%'; rateEl.className = up?'wk-up':'wk-dn';
+}
+
+function fmtDateRange(arr) {
+  if (!arr.length) return '—';
+  const s=arr[0].date.slice(5).replace('-','/'), e=arr[arr.length-1].date.slice(5).replace('-','/');
+  return s===e ? s : s+'~'+e;
+}
+
+function fillWeeklyData() {
+  const month = document.getElementById('sel-month').value;
+  const sorted = [...ALL_DATA].filter(r=>month==='all'||r.date.startsWith(month)).sort((a,b)=>a.date.localeCompare(b.date));
+  const curW = sorted.slice(-7), prevW = sorted.slice(-14,-7);
+  const hasPrev = prevW.length > 0;
+  const ws = (arr,k) => arr.reduce((s,r)=>s+(r[k]||0),0);
+  document.getElementById('w-cur-range').textContent  = '本周 '+fmtDateRange(curW);
+  document.getElementById('w-prev-range').textContent = '上周 '+fmtDateRange(prevW);
+  setWeekCell('wc-dau-cur','wc-dau-prev','wc-dau-diff','wc-dau-rate', ws(curW,'dau'), ws(prevW,'dau'), hasPrev);
+  setWeekCell('wc-new-cur','wc-new-prev','wc-new-diff','wc-new-rate', ws(curW,'new'), ws(prevW,'new'), hasPrev);
+  setWeekCell('wc-rev-cur','wc-rev-prev','wc-rev-diff','wc-rev-rate', ws(curW,'rev'), ws(prevW,'rev'), hasPrev);
+
+  const ps = [...ALL_PROJ_DATA].filter(r=>month==='all'||r.date.startsWith(month)).sort((a,b)=>a.date.localeCompare(b.date));
+  const pCur = ps.slice(-7), pPrev = ps.slice(-14,-7);
+  const hp = pPrev.length > 0;
+  const pp = (arr,k) => arr.reduce((s,r)=>s+(r[k]||0),0);
+  setWeekCell('wp-lal-dau-cur','wp-lal-dau-prev','wp-lal-dau-diff','wp-lal-dau-rate', pp(pCur,'lal_d'), pp(pPrev,'lal_d'), hp);
+  setWeekCell('wp-lal-new-cur','wp-lal-new-prev','wp-lal-new-diff','wp-lal-new-rate', pp(pCur,'lal_n'), pp(pPrev,'lal_n'), hp);
+  setWeekCell('wp-lal-rev-cur','wp-lal-rev-prev','wp-lal-rev-diff','wp-lal-rev-rate', pp(pCur,'lal_r'), pp(pPrev,'lal_r'), hp);
+  setWeekCell('wp-xb-dau-cur','wp-xb-dau-prev','wp-xb-dau-diff','wp-xb-dau-rate',   pp(pCur,'xb_d'),  pp(pPrev,'xb_d'),  hp);
+  setWeekCell('wp-xb-new-cur','wp-xb-new-prev','wp-xb-new-diff','wp-xb-new-rate',   pp(pCur,'xb_n'),  pp(pPrev,'xb_n'),  hp);
+  setWeekCell('wp-xb-rev-cur','wp-xb-rev-prev','wp-xb-rev-diff','wp-xb-rev-rate',   pp(pCur,'xb_r'),  pp(pPrev,'xb_r'),  hp);
 }
 
 function render() {
@@ -574,6 +670,7 @@ function render() {
   fillKPI(FILTERED);
   fillTable(FILTERED);
   fillGroup(FILTERED);
+  fillWeeklyData();
   requestAnimationFrame(()=>requestAnimationFrame(()=>drawCharts(FILTERED)));
 }
 
