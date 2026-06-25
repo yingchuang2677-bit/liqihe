@@ -137,8 +137,14 @@ table.dt tbody tr:hover td{background:rgba(79,142,247,.04);}
 }
 /* ---- 周数据对比 ---- */
 .week-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:16px;}
-.week-date-range{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:12px;display:flex;gap:16px;}
-.week-date-range span{color:var(--sub);}
+.week-nav{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.week-nav-btn{background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.25);color:var(--blue);border-radius:var(--radius-sm);padding:5px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;transition:all .15s;white-space:nowrap;}
+.week-nav-btn:hover:not(:disabled){background:rgba(79,142,247,.2);}
+.week-nav-btn:disabled{opacity:.3;cursor:not-allowed;}
+.week-nav-info{flex:1;display:flex;align-items:center;gap:10px;font-size:10px;font-family:'DM Mono',monospace;color:var(--sub);}
+.week-nav-info .wni-sep{color:var(--muted);}
+.week-nav-cur{color:var(--blue);font-weight:700;}
+.week-nav-prev{color:var(--sub);}
 .wt{width:100%;border-collapse:collapse;}
 .wt th{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:6px 10px;text-align:right;border-bottom:1px solid var(--border);}
 .wt th:first-child{text-align:left;}
@@ -199,7 +205,15 @@ table.dt tbody tr:hover td{background:rgba(79,142,247,.04);}
     </div>
     <div class="sec-title">📊 周数据对比<span style="font-size:10px;margin-left:8px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">7天周期 · 环比上周</span></div>
     <div class="week-block">
-      <div class="week-date-range" id="w-date-range"><span id="w-cur-range">本周 —</span><span id="w-prev-range">上周 —</span></div>
+      <div class="week-nav">
+        <button class="week-nav-btn" id="w-btn-prev" onclick="weekOffset++;fillWeeklyData()">← 上一周</button>
+        <div class="week-nav-info">
+          <span class="week-nav-cur" id="w-cur-range">本周 —</span>
+          <span class="wni-sep">vs</span>
+          <span class="week-nav-prev" id="w-prev-range">上周 —</span>
+        </div>
+        <button class="week-nav-btn" id="w-btn-next" onclick="weekOffset=Math.max(0,weekOffset-1);fillWeeklyData()" disabled>下一周 →</button>
+      </div>
       <table class="wt" style="margin-bottom:14px;">
         <thead><tr><th>指标</th><th>本周</th><th>上周</th><th>差额</th><th>环比</th></tr></thead>
         <tbody>
@@ -560,6 +574,7 @@ function buildDateOptions(data) {
 }
 
 function applyFilter() {
+  weekOffset = 0;
   const month = document.getElementById('sel-month').value;
   const date = document.getElementById('sel-date').value;
   FILTERED = ALL_DATA.filter(d => {
@@ -641,20 +656,37 @@ function fmtDateRange(arr) {
   return s===e ? s : s+'~'+e;
 }
 
+let weekOffset = 0;
+
 function fillWeeklyData() {
   const month = document.getElementById('sel-month').value;
   const sorted = [...ALL_DATA].filter(r=>month==='all'||r.date.startsWith(month)).sort((a,b)=>a.date.localeCompare(b.date));
-  const curW = sorted.slice(-7), prevW = sorted.slice(-14,-7);
+  const total = sorted.length;
+  const curEnd   = Math.max(0, total - weekOffset * 7);
+  const curStart = Math.max(0, curEnd - 7);
+  const curW  = sorted.slice(curStart, curEnd);
+  const prevW = sorted.slice(Math.max(0, curStart - 7), curStart);
   const hasPrev = prevW.length > 0;
-  const ws = (arr,k) => arr.reduce((s,r)=>s+(r[k]||0),0);
+
+  const btnNext = document.getElementById('w-btn-next');
+  const btnPrev = document.getElementById('w-btn-prev');
+  if (btnNext) btnNext.disabled = weekOffset === 0;
+  if (btnPrev) btnPrev.disabled = curStart === 0;
+
   document.getElementById('w-cur-range').textContent  = '本周 '+fmtDateRange(curW);
-  document.getElementById('w-prev-range').textContent = '上周 '+fmtDateRange(prevW);
+  document.getElementById('w-prev-range').textContent = hasPrev ? '上周 '+fmtDateRange(prevW) : '上周 —';
+
+  const ws = (arr,k) => arr.reduce((s,r)=>s+(r[k]||0),0);
   setWeekCell('wc-dau-cur','wc-dau-prev','wc-dau-diff','wc-dau-rate', ws(curW,'dau'), ws(prevW,'dau'), hasPrev);
   setWeekCell('wc-new-cur','wc-new-prev','wc-new-diff','wc-new-rate', ws(curW,'new'), ws(prevW,'new'), hasPrev);
   setWeekCell('wc-rev-cur','wc-rev-prev','wc-rev-diff','wc-rev-rate', ws(curW,'rev'), ws(prevW,'rev'), hasPrev);
 
   const ps = [...ALL_PROJ_DATA].filter(r=>month==='all'||r.date.startsWith(month)).sort((a,b)=>a.date.localeCompare(b.date));
-  const pCur = ps.slice(-7), pPrev = ps.slice(-14,-7);
+  const ptotal = ps.length;
+  const pcEnd   = Math.max(0, ptotal - weekOffset * 7);
+  const pcStart = Math.max(0, pcEnd - 7);
+  const pCur  = ps.slice(pcStart, pcEnd);
+  const pPrev = ps.slice(Math.max(0, pcStart - 7), pcStart);
   const hp = pPrev.length > 0;
   const pp = (arr,k) => arr.reduce((s,r)=>s+(r[k]||0),0);
   setWeekCell('wp-lal-dau-cur','wp-lal-dau-prev','wp-lal-dau-diff','wp-lal-dau-rate', pp(pCur,'lal_d'), pp(pPrev,'lal_d'), hp);
